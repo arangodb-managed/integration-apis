@@ -38,7 +38,7 @@ else
 endif
 
 .PHONY: all
-all: generate build check ts # docs
+all: generate build check ts docs
 
 .PHONY: pull-build-image
 pull-build-image: 
