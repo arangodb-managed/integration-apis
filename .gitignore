@@ -1,0 +1,11 @@
+/bin/test
+
+#IDE's
+.idea
+
+.vscode/*.log
+
+/bin
+go.mod.orig
+go.sum.orig
+
