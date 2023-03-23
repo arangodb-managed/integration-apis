@@ -34,8 +34,8 @@ const (
 const (
 	// BucketService BucketPath permissions
 
-	// PermissionBucketServiceBackupPathGetRepositoryURL is needed to get the URL needed to store/delete objects in a bucket
-	PermissionBucketServiceBackupPathGetRepositoryURL = "bucketservice.backuppath.get-repository-url"
+	// PermissionBucketServiceBucketPathGetRepositoryURL is needed to get the URL needed to store/delete objects in a bucket
+	PermissionBucketServiceBucketPathGetRepositoryURL = "bucketservice.bucketpath.get-repository-url"
 	// PermissionBucketServiceBucketPathDelete is needed to delete the specified path (recursively) from the provided bucket
 	PermissionBucketServiceBucketPathDelete = "bucketservice.bucketpath.delete"
 	// PermissionBucketServiceBucketPathGetSize is needed to get the size of a certain path in a bucket
