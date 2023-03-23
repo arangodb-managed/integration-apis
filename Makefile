@@ -139,7 +139,7 @@ ts: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 		sh -c "cd bin/protobuf ; protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf --ts_out=../../typescript $(LOCTSPROTOSOURCES) --ts_opt=. "
 
 
-PYPROTOSOURCES := $(TARGETINTPROTOSOURCES)
+PYPROTOSOURCES := $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 LOCPYPROTOSOURCES := $(PYPROTOSOURCES:bin/protobuf/%=%)
 
 # Generate API as python 
@@ -148,7 +148,7 @@ python: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@rm -Rf python
 	@mkdir -p python
 	$(PYDOCKERENV) \
-		sh -c "cd /usr/src ; pip install --user grpcio-tools ; python -m grpc_tools.protoc -I.:/usr/src/vendor:/usr/src/vendor/googleapis/:/usr/src/vendor/github.com/gogo/protobuf/protobuf:/usr/src/vendor/github.com/arangodb-managed/apis/ --python_out=/usr/src/python --pyi_out=/usr/src/python --grpc_python_out=/usr/src/python $(LOCPYPROTOSOURCES)"
+		sh -c "cd bin/protobuf ; pip install --user grpcio-tools ; python -m grpc_tools.protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf:../../vendor/github.com/arangodb-managed/apis/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
 
 .PHONY: test
 test:
