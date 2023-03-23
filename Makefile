@@ -9,6 +9,7 @@ BUILDIMAGE := arangodboasis/golang-ci:latest
 CACHEVOL := arangodb-cloud-integration-apis-gocache
 MODVOL := arangodb-cloud-integration-apis-pkg-mod
 HOMEVOL := arangodb-cloud-integration-apis-home
+PYTHONIMAGE := python:3.10.9-slim
 
 ifndef CIRCLECI
 	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
@@ -31,6 +32,13 @@ DOCKERARGS := run -t --rm \
 	-w /usr/src \
 	$(BUILDIMAGE)
 
+PYDOCKERARGS := run -t --rm \
+	-v $(shell pwd):/usr/src \
+	-w /usr/src \
+	$(PYTHONIMAGE)
+
+PYDOCKERENV := docker $(PYDOCKERARGS)
+
 ifndef CIRCLECI
 	DOCKERENV := docker $(DOCKERARGS)
 else
@@ -38,7 +46,7 @@ else
 endif
 
 .PHONY: all
-all: generate build check ts docs
+all: generate build check ts python docs
 
 .PHONY: pull-build-image
 pull-build-image: 
@@ -129,6 +137,18 @@ ts: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@mkdir -p typescript
 	$(DOCKERENV) \
 		sh -c "cd bin/protobuf ; protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf --ts_out=../../typescript $(LOCTSPROTOSOURCES) --ts_opt=. "
+
+
+PYPROTOSOURCES := $(TARGETINTPROTOSOURCES)
+LOCPYPROTOSOURCES := $(PYPROTOSOURCES:bin/protobuf/%=%)
+
+# Generate API as python 
+.PHONY: python
+python: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
+	@rm -Rf python
+	@mkdir -p python
+	$(PYDOCKERENV) \
+		sh -c "cd /usr/src ; pip install --user grpcio-tools ; python -m grpc_tools.protoc -I.:/usr/src/vendor:/usr/src/vendor/googleapis/:/usr/src/vendor/github.com/gogo/protobuf/protobuf:/usr/src/vendor/github.com/arangodb-managed/apis/ --python_out=/usr/src/python --pyi_out=/usr/src/python --grpc_python_out=/usr/src/python $(LOCPYPROTOSOURCES)"
 
 .PHONY: test
 test:
