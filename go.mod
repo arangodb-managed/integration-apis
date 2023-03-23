@@ -106,7 +106,6 @@ replace sourcegraph.com/sourcegraph/go-diff => github.com/sourcegraph/go-diff v0
 
 require (
 	github.com/arangodb-managed/apis v0.78.1
-	github.com/arangodb-managed/internal-apis v0.207.2
 	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.5.3
 	github.com/stretchr/testify v1.8.0
