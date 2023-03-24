@@ -37,12 +37,13 @@ PYDOCKERARGS := run -t --rm \
 	-w /usr/src \
 	$(PYTHONIMAGE)
 
-PYDOCKERENV := docker $(PYDOCKERARGS)
 
 ifndef CIRCLECI
 	DOCKERENV := docker $(DOCKERARGS)
+	PYDOCKERENV := docker $(PYDOCKERARGS)
 else
 	DOCKERENV :=
+	PYDOCKERENV :=
 endif
 
 .PHONY: all
@@ -148,7 +149,7 @@ python: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@rm -Rf python
 	@mkdir -p python
 	$(PYDOCKERENV) \
-		sh -c "cd bin/protobuf ; pip install --user grpcio-tools ; python -m grpc_tools.protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf:../../vendor/github.com/arangodb-managed/apis/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
+		sh -c "cd bin/protobuf ; pip3 install --user grpcio-tools ; python3 -m grpc_tools.protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf:../../vendor/github.com/arangodb-managed/apis/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
 
 .PHONY: test
 test:
