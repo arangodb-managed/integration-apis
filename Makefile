@@ -9,7 +9,6 @@ BUILDIMAGE := arangodboasis/golang-ci:latest
 CACHEVOL := arangodb-cloud-integration-apis-gocache
 MODVOL := arangodb-cloud-integration-apis-pkg-mod
 HOMEVOL := arangodb-cloud-integration-apis-home
-PYTHONIMAGE := python:3.10.9-slim
 
 ifndef CIRCLECI
 	GITHUB_TOKEN := $(shell cat $(HOME)/.arangodb/ms/github-readonly-code-acces.token)
@@ -32,18 +31,11 @@ DOCKERARGS := run -t --rm \
 	-w /usr/src \
 	$(BUILDIMAGE)
 
-PYDOCKERARGS := run -t --rm \
-	-v $(shell pwd):/usr/src \
-	-w /usr/src \
-	$(PYTHONIMAGE)
-
 
 ifndef CIRCLECI
 	DOCKERENV := docker $(DOCKERARGS)
-	PYDOCKERENV := docker $(PYDOCKERARGS)
 else
 	DOCKERENV :=
-	PYDOCKERENV :=
 endif
 
 .PHONY: all
@@ -148,7 +140,7 @@ LOCPYPROTOSOURCES := $(PYPROTOSOURCES:bin/protobuf/%=%)
 python: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@rm -Rf python
 	@mkdir -p python
-	$(PYDOCKERENV) \
+	$(DOCKERENV) \
 		sh -c "cd bin/protobuf ; pip3 install --user grpcio-tools ; python3 -m grpc_tools.protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf:../../vendor/github.com/arangodb-managed/apis/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
 
 .PHONY: test
