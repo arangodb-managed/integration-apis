@@ -7,24 +7,6 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class ListProvidersRequest(_message.Message):
-    __slots__ = ["options", "organization_id"]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
-    options: _common_pb2.ListOptions
-    organization_id: str
-    def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., organization_id: _Optional[str] = ...) -> None: ...
-
-class ListRegionsRequest(_message.Message):
-    __slots__ = ["options", "organization_id", "provider_id"]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
-    PROVIDER_ID_FIELD_NUMBER: _ClassVar[int]
-    options: _common_pb2.ListOptions
-    organization_id: str
-    provider_id: str
-    def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., provider_id: _Optional[str] = ..., organization_id: _Optional[str] = ...) -> None: ...
-
 class Provider(_message.Message):
     __slots__ = ["id", "name", "prerelease"]
     ID_FIELD_NUMBER: _ClassVar[int]
@@ -41,22 +23,30 @@ class ProviderList(_message.Message):
     items: _containers.RepeatedCompositeFieldContainer[Provider]
     def __init__(self, items: _Optional[_Iterable[_Union[Provider, _Mapping]]] = ...) -> None: ...
 
+class ListProvidersRequest(_message.Message):
+    __slots__ = ["options", "organization_id"]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
+    ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
+    options: _common_pb2.ListOptions
+    organization_id: str
+    def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., organization_id: _Optional[str] = ...) -> None: ...
+
 class Region(_message.Message):
-    __slots__ = ["available", "id", "location", "low_stock", "out_of_stock", "prerelease", "provider_id"]
-    AVAILABLE_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["id", "provider_id", "location", "available", "low_stock", "out_of_stock", "prerelease"]
     ID_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_ID_FIELD_NUMBER: _ClassVar[int]
     LOCATION_FIELD_NUMBER: _ClassVar[int]
+    AVAILABLE_FIELD_NUMBER: _ClassVar[int]
     LOW_STOCK_FIELD_NUMBER: _ClassVar[int]
     OUT_OF_STOCK_FIELD_NUMBER: _ClassVar[int]
     PRERELEASE_FIELD_NUMBER: _ClassVar[int]
-    PROVIDER_ID_FIELD_NUMBER: _ClassVar[int]
-    available: bool
     id: str
+    provider_id: str
     location: str
+    available: bool
     low_stock: bool
     out_of_stock: bool
     prerelease: bool
-    provider_id: str
     def __init__(self, id: _Optional[str] = ..., provider_id: _Optional[str] = ..., location: _Optional[str] = ..., available: bool = ..., low_stock: bool = ..., out_of_stock: bool = ..., prerelease: bool = ...) -> None: ...
 
 class RegionList(_message.Message):
@@ -64,3 +54,13 @@ class RegionList(_message.Message):
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Region]
     def __init__(self, items: _Optional[_Iterable[_Union[Region, _Mapping]]] = ...) -> None: ...
+
+class ListRegionsRequest(_message.Message):
+    __slots__ = ["options", "provider_id", "organization_id"]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
+    PROVIDER_ID_FIELD_NUMBER: _ClassVar[int]
+    ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
+    options: _common_pb2.ListOptions
+    provider_id: str
+    organization_id: str
+    def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., provider_id: _Optional[str] = ..., organization_id: _Optional[str] = ...) -> None: ...
