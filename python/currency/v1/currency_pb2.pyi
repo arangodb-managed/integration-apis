@@ -8,15 +8,15 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Currency(_message.Message):
-    __slots__ = ["id", "iso4217_code", "name", "sign"]
+    __slots__ = ["id", "name", "sign", "iso4217_code"]
     ID_FIELD_NUMBER: _ClassVar[int]
-    ISO4217_CODE_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     SIGN_FIELD_NUMBER: _ClassVar[int]
+    ISO4217_CODE_FIELD_NUMBER: _ClassVar[int]
     id: str
-    iso4217_code: str
     name: str
     sign: str
+    iso4217_code: str
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., sign: _Optional[str] = ..., iso4217_code: _Optional[str] = ...) -> None: ...
 
 class CurrencyList(_message.Message):

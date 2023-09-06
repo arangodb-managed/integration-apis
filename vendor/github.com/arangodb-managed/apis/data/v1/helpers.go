@@ -74,6 +74,31 @@ func (s *DataVolumeInfo) Clone() *DataVolumeInfo {
 	return &clone
 }
 
+// Clone creates a deep copy of the given source
+func (s *ServersSpecLimits) Clone() *ServersSpecLimits {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	clone.Coordinators = s.Coordinators.Clone()
+	clone.CoordinatorMemorySize = s.CoordinatorMemorySize.Clone()
+	clone.Dbservers = s.Dbservers.Clone()
+	clone.DbserverMemorySize = s.DbserverMemorySize.Clone()
+	clone.DbserverDiskSize = s.DbserverDiskSize.Clone()
+	clone.NodeMemorySize = s.NodeMemorySize.Clone()
+	clone.NodeCount = s.NodeCount.Clone()
+	return &clone
+}
+
+// Clone creates a deep copy of the given source
+func (s *ServersSpecLimits_Limits) Clone() *ServersSpecLimits_Limits {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	return &clone
+}
+
 // SpecEquals returns true when source & other have the same specification values
 func (source *Deployment) SpecEquals(other *Deployment) bool {
 	return source.GetVersion() == other.GetVersion() &&
@@ -88,6 +113,7 @@ func (source *Deployment) SpecEquals(other *Deployment) bool {
 // Equals returns true when source & other have the same values
 func (source *Deployment_BackupRestoreSpec) Equals(other *Deployment_BackupRestoreSpec) bool {
 	return source.GetRevision() == other.GetRevision() &&
+		source.GetRestoredById() == other.GetRestoredById() &&
 		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
 		source.GetBackupId() == other.GetBackupId()
 }
@@ -138,6 +164,7 @@ func (source *Deployment_BackupRestoreStatus) Equals(other *Deployment_BackupRes
 	return source.GetRevision() == other.GetRevision() &&
 		source.GetRestoring() == other.GetRestoring() &&
 		source.GetStatus() == other.GetStatus() &&
+		source.GetLastUpdatedAt().Equal(other.GetLastUpdatedAt()) &&
 		source.GetFailureReason() == other.GetFailureReason()
 }
 

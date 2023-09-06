@@ -14,31 +14,39 @@ class BucketRequest(_message.Message):
     tags: _containers.RepeatedCompositeFieldContainer[_icommon_pb2.KeyValuePair]
     def __init__(self, tags: _Optional[_Iterable[_Union[_icommon_pb2.KeyValuePair, _Mapping]]] = ...) -> None: ...
 
-class ObjectInfo(_message.Message):
-    __slots__ = ["is_locked", "last_updated_at", "size_in_bytes"]
-    IS_LOCKED_FIELD_NUMBER: _ClassVar[int]
-    LAST_UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
-    SIZE_IN_BYTES_FIELD_NUMBER: _ClassVar[int]
-    is_locked: bool
-    last_updated_at: _timestamp_pb2.Timestamp
-    size_in_bytes: int
-    def __init__(self, is_locked: bool = ..., size_in_bytes: _Optional[int] = ..., last_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
-
 class PathRequest(_message.Message):
     __slots__ = ["path"]
     PATH_FIELD_NUMBER: _ClassVar[int]
     path: str
     def __init__(self, path: _Optional[str] = ...) -> None: ...
 
+class RepositoryURL(_message.Message):
+    __slots__ = ["url", "bucket_path"]
+    URL_FIELD_NUMBER: _ClassVar[int]
+    BUCKET_PATH_FIELD_NUMBER: _ClassVar[int]
+    url: str
+    bucket_path: str
+    def __init__(self, url: _Optional[str] = ..., bucket_path: _Optional[str] = ...) -> None: ...
+
 class PathSize(_message.Message):
-    __slots__ = ["number_of_files", "number_of_folders", "size_in_bytes"]
+    __slots__ = ["size_in_bytes", "number_of_files", "number_of_folders"]
+    SIZE_IN_BYTES_FIELD_NUMBER: _ClassVar[int]
     NUMBER_OF_FILES_FIELD_NUMBER: _ClassVar[int]
     NUMBER_OF_FOLDERS_FIELD_NUMBER: _ClassVar[int]
-    SIZE_IN_BYTES_FIELD_NUMBER: _ClassVar[int]
+    size_in_bytes: int
     number_of_files: int
     number_of_folders: int
-    size_in_bytes: int
     def __init__(self, size_in_bytes: _Optional[int] = ..., number_of_files: _Optional[int] = ..., number_of_folders: _Optional[int] = ...) -> None: ...
+
+class ObjectInfo(_message.Message):
+    __slots__ = ["is_locked", "size_in_bytes", "last_updated_at"]
+    IS_LOCKED_FIELD_NUMBER: _ClassVar[int]
+    SIZE_IN_BYTES_FIELD_NUMBER: _ClassVar[int]
+    LAST_UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
+    is_locked: bool
+    size_in_bytes: int
+    last_updated_at: _timestamp_pb2.Timestamp
+    def __init__(self, is_locked: bool = ..., size_in_bytes: _Optional[int] = ..., last_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ReadObjectChunk(_message.Message):
     __slots__ = ["chunk"]
@@ -46,22 +54,14 @@ class ReadObjectChunk(_message.Message):
     chunk: bytes
     def __init__(self, chunk: _Optional[bytes] = ...) -> None: ...
 
-class RepositoryURL(_message.Message):
-    __slots__ = ["bucket_path", "url"]
-    BUCKET_PATH_FIELD_NUMBER: _ClassVar[int]
-    URL_FIELD_NUMBER: _ClassVar[int]
-    bucket_path: str
-    url: str
-    def __init__(self, url: _Optional[str] = ..., bucket_path: _Optional[str] = ...) -> None: ...
-
 class WriteObjectChunk(_message.Message):
-    __slots__ = ["chunk", "has_more", "path"]
+    __slots__ = ["path", "chunk", "has_more"]
+    PATH_FIELD_NUMBER: _ClassVar[int]
     CHUNK_FIELD_NUMBER: _ClassVar[int]
     HAS_MORE_FIELD_NUMBER: _ClassVar[int]
-    PATH_FIELD_NUMBER: _ClassVar[int]
+    path: PathRequest
     chunk: bytes
     has_more: bool
-    path: PathRequest
     def __init__(self, path: _Optional[_Union[PathRequest, _Mapping]] = ..., chunk: _Optional[bytes] = ..., has_more: bool = ...) -> None: ...
 
 class WriteObjectControl(_message.Message):

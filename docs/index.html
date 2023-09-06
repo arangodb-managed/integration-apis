@@ -195,6 +195,21 @@ title: "ArangoGraph Insights Platform Integration API"
         
           
           <li>
+            <a href="#data-service%2fv1%2fdataservice.proto">data-service/v1/dataservice.proto</a>
+            <ul>
+              
+              
+              
+              
+                <li>
+                  <a href="#arangodb.cloud.integration.bucketservice.v1.DataService"><span class="badge">S</span>DataService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#bucket-service%2fv1%2fbucketservice.proto">bucket-service/v1/bucketservice.proto</a>
             <ul>
               
@@ -289,6 +304,41 @@ title: "ArangoGraph Insights Platform Integration API"
       
 
       
+    
+      
+      <div class="file-heading">
+        <h2 id="data-service/v1/dataservice.proto">data-service/v1/dataservice.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+
+      
+
+      
+
+      
+        <h3 id="arangodb.cloud.integration.bucketservice.v1.DataService">DataService</h3>
+        <p>DataService is the API used to manage deployments.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>GetDeploymentRootCredentials</td>
+                <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
+                <td><a href="#arangodb.cloud.data.v1.DeploymentCredentials">.arangodb.cloud.data.v1.DeploymentCredentials</a></td>
+                <td><p>Fetch the credentials for the root user of the deployment with given ID.
+Required permissions:
+- dataservice.deployment.get-root-credentials for the deployment.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
     
       
       <div class="file-heading">

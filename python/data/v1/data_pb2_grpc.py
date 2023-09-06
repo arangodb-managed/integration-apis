@@ -76,6 +76,11 @@ class DataServiceStub(object):
                 request_serializer=common_dot_v1_dot_common__pb2.Empty.SerializeToString,
                 response_deserializer=data_dot_v1_dot_data__pb2.Version.FromString,
                 )
+        self.GetVersion = channel.unary_unary(
+                '/arangodb.cloud.data.v1.DataService/GetVersion',
+                request_serializer=common_dot_v1_dot_common__pb2.IDOptions.SerializeToString,
+                response_deserializer=data_dot_v1_dot_data__pb2.Version.FromString,
+                )
         self.GetServersSpecLimits = channel.unary_unary(
                 '/arangodb.cloud.data.v1.DataService/GetServersSpecLimits',
                 request_serializer=data_dot_v1_dot_data__pb2.ServersSpecLimitsRequest.SerializeToString,
@@ -125,6 +130,11 @@ class DataServiceStub(object):
                 '/arangodb.cloud.data.v1.DataService/GetDeploymentFeatures',
                 request_serializer=data_dot_v1_dot_data__pb2.DeploymentFeaturesRequest.SerializeToString,
                 response_deserializer=data_dot_v1_dot_data__pb2.DeploymentFeatures.FromString,
+                )
+        self.PauseDeployment = channel.unary_unary(
+                '/arangodb.cloud.data.v1.DataService/PauseDeployment',
+                request_serializer=common_dot_v1_dot_common__pb2.IDOptions.SerializeToString,
+                response_deserializer=common_dot_v1_dot_common__pb2.Empty.FromString,
                 )
         self.ResumeDeployment = channel.unary_unary(
                 '/arangodb.cloud.data.v1.DataService/ResumeDeployment',
@@ -281,6 +291,15 @@ class DataServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetVersion(self, request, context):
+        """Fetch the ArangoDB version by its id (semver).
+        Required permissions:
+        - None
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetServersSpecLimits(self, request, context):
         """Fetch the limits for server specifications for deployments
         owned by the given projected, created in the given region.
@@ -380,6 +399,16 @@ class DataServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PauseDeployment(self, request, context):
+        """Pauses a deployment indentified by the given ID.
+        When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+        Required permissions:
+        - data.deployment.pause on the deployment
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ResumeDeployment(self, request, context):
         """Resumes a paused deployment identified by the given id.
         When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
@@ -423,7 +452,8 @@ class DataServiceServicer(object):
     def ListDiskPerformances(self, request, context):
         """Lists disk performances that match all of the given filters.
         Required permissions:
-        - data.diskperformance.list (if deployment ID is provided)
+        - data.diskperformance.list on the deployment (if deployment ID is provided)
+        - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
         - None, authenticated only (if no deployment ID is provided)
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -502,6 +532,11 @@ def add_DataServiceServicer_to_server(servicer, server):
                     request_deserializer=common_dot_v1_dot_common__pb2.Empty.FromString,
                     response_serializer=data_dot_v1_dot_data__pb2.Version.SerializeToString,
             ),
+            'GetVersion': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetVersion,
+                    request_deserializer=common_dot_v1_dot_common__pb2.IDOptions.FromString,
+                    response_serializer=data_dot_v1_dot_data__pb2.Version.SerializeToString,
+            ),
             'GetServersSpecLimits': grpc.unary_unary_rpc_method_handler(
                     servicer.GetServersSpecLimits,
                     request_deserializer=data_dot_v1_dot_data__pb2.ServersSpecLimitsRequest.FromString,
@@ -551,6 +586,11 @@ def add_DataServiceServicer_to_server(servicer, server):
                     servicer.GetDeploymentFeatures,
                     request_deserializer=data_dot_v1_dot_data__pb2.DeploymentFeaturesRequest.FromString,
                     response_serializer=data_dot_v1_dot_data__pb2.DeploymentFeatures.SerializeToString,
+            ),
+            'PauseDeployment': grpc.unary_unary_rpc_method_handler(
+                    servicer.PauseDeployment,
+                    request_deserializer=common_dot_v1_dot_common__pb2.IDOptions.FromString,
+                    response_serializer=common_dot_v1_dot_common__pb2.Empty.SerializeToString,
             ),
             'ResumeDeployment': grpc.unary_unary_rpc_method_handler(
                     servicer.ResumeDeployment,
@@ -798,6 +838,23 @@ class DataService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetVersion(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/arangodb.cloud.data.v1.DataService/GetVersion',
+            common_dot_v1_dot_common__pb2.IDOptions.SerializeToString,
+            data_dot_v1_dot_data__pb2.Version.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetServersSpecLimits(request,
             target,
             options=(),
@@ -964,6 +1021,23 @@ class DataService(object):
         return grpc.experimental.unary_unary(request, target, '/arangodb.cloud.data.v1.DataService/GetDeploymentFeatures',
             data_dot_v1_dot_data__pb2.DeploymentFeaturesRequest.SerializeToString,
             data_dot_v1_dot_data__pb2.DeploymentFeatures.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PauseDeployment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/arangodb.cloud.data.v1.DataService/PauseDeployment',
+            common_dot_v1_dot_common__pb2.IDOptions.SerializeToString,
+            common_dot_v1_dot_common__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

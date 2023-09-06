@@ -56,12 +56,12 @@ export interface DeploymentReplication {
   // string
   tls_keyfile?: string;
   
-  // List of master endpoints at source deployment.
-  // This setting will be removed for migration-agent v1.0.0 and is needed for the BETA version only.
+  // Identifier of the user that initiated this deployment replication.
+  // This is a read-only value.
   // string
-  master_endpoint?: string[];
+  started_by_id?: string;
   
-  // CancelationOptions describes what to do during cancelation process of the migration-agent.
+  // CancelationOptions describes what to do during cancellation process of the migration-agent.
   // DeploymentReplication_CancelationOptions
   cancelation_options?: DeploymentReplication_CancelationOptions;
   
@@ -70,13 +70,13 @@ export interface DeploymentReplication {
   status?: DeploymentReplication_Status;
 }
 
-// CancelationOptions describes what to do during cancelation process of the migration-agent.
+// CancelationOptions describes what to do during cancellation process of the migration-agent.
 export interface DeploymentReplication_CancelationOptions {
-  // If set, during cancelation process data consistency is not required (otherwise data consistency is required).
+  // If set, during cancellation process data consistency is not required (otherwise data consistency is required).
   // boolean
   data_consistency_not_required?: boolean;
   
-  // If set, after cancelation the source deployment will be in read-only mode.
+  // If set, after cancellation the source deployment will be in read-only mode.
   // boolean
   make_source_deployment_read_only?: boolean;
 }
@@ -102,14 +102,6 @@ export interface DeploymentReplication_Status {
   // string
   message?: string;
   
-  // Total number of shards that should be in-sync.
-  // number
-  total_shards?: number;
-  
-  // Number of shards currently in-sync.
-  // number
-  shards_in_sync?: number;
-  
   // Service (LoadBalancer) endpoint of the SyncMasters
   // This field has the format of a URL.
   // This is a readonly field.
@@ -120,6 +112,17 @@ export interface DeploymentReplication_Status {
   // This is a readonly field.
   // googleTypes.Timestamp
   phase_updated_at?: googleTypes.Timestamp;
+  
+  // Service (LoadBalancer) endpoint of the Forwarder service which allows to start streaming connection.
+  // This field has the format of a URL.
+  // This is a readonly field.
+  // string
+  forwarder_endpoint?: string;
+  
+  // Progress of replication in percents (value from 0.0 to 1.0).
+  // This is a readonly field.
+  // number
+  progress?: number;
 }
 
 // ReplicationService is the API used to replicate a deployment.

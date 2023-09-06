@@ -425,6 +425,14 @@ export interface Deployment {
   // After creation, this value cannot be changed.
   // string
   deployment_profile_id?: string;
+  
+  // Determines if deployment is using platform authentication
+  // boolean
+  is_platform_authentication_enabled?: boolean;
+  
+  // The (optional) intended use-case for this deployment
+  // string
+  intended_use_case?: string;
 }
 
 // Information about a backup restore.
@@ -438,6 +446,11 @@ export interface Deployment_BackupRestoreSpec {
   // googleTypes.Timestamp
   last_updated_at?: googleTypes.Timestamp;
   
+  // Identifier of the user that restored this backup.
+  // This is a read-only value.
+  // string
+  restored_by_id?: string;
+  
   // Identifier of a backup to restore to.
   // string
   backup_id?: string;
@@ -449,6 +462,10 @@ export interface Deployment_BackupRestoreStatus {
   // The revision of the used BackupRestoreSpec
   // number
   revision?: number;
+  
+  // The timestamp of when the backup restore status was updated.
+  // googleTypes.Timestamp
+  last_updated_at?: googleTypes.Timestamp;
   
   // Set if the deployment is preparing or restoring a backup
   // boolean
@@ -804,6 +821,14 @@ export interface DeploymentFeatures {
   // Is the use of an IAM provider available?
   // boolean
   iamprovider?: boolean;
+  
+  // Is the use of the pause feature available?
+  // boolean
+  pause?: boolean;
+  
+  // Is the use of the ML features available?
+  // boolean
+  ml?: boolean;
 }
 
 // Request arguments for GetDeploymentFeatures
@@ -1188,6 +1213,12 @@ export interface ListCPUSizesRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
+  
+  // Optional identifier of a deployment for which CPU sizes are requested.
+  // If specified, only those CPU sizes are listed, that an existing deployment is allowed to have.
+  // If specified, project_id field is ignored, and instead read from the deployment.
+  // string
+  deployment_id?: string;
 }
 
 // Request arguments for ListDeploymentModels
@@ -1250,6 +1281,13 @@ export interface ListDiskPerformancesRequest {
   // This field is ignored when a deployment_id is provided, otherwise required.
   // number
   dbserver_disk_size?: number;
+  
+  // Optional identifier of the organization for which the disk performances need to be listed.
+  // If specified, only those disk performances are listed that the organization is allowed to use
+  // for a deployment of a given node_size_id.
+  // This field is ignored when a deployment_id is provided.
+  // string
+  organization_id?: string;
   
   // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
   // string
@@ -1337,6 +1375,13 @@ export interface NodeSizesRequest {
   // Ignored if project_id or deployment_id is set.
   // string
   organization_id?: string;
+  
+  // Optional field to include node sizes that are otherwise restricted
+  // for the specified projectID / organizationID.
+  // By default, the result is restricted based on the organization and project tiers/quotas.
+  // Ignored when project_id is "all" and organization_id is not provided.
+  // boolean
+  include_restricted?: boolean;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
@@ -1484,6 +1529,10 @@ export interface Version {
   // If set, this version is not longer actively supported.
   // boolean
   is_end_of_life?: boolean;
+  
+  // ArangoDB version release notes
+  // string
+  release_notes_url?: string;
 }
 
 // List of Versions.
@@ -1565,6 +1614,11 @@ export interface IDataService {
   // - None
   GetDefaultVersion: (req?: arangodb_cloud_common_v1_Empty) => Promise<Version>;
   
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  GetVersion: (req: arangodb_cloud_common_v1_IDOptions) => Promise<Version>;
+  
   // Fetch the limits for server specifications for deployments
   // owned by the given projected, created in the given region.
   // Required permissions:
@@ -1624,6 +1678,12 @@ export interface IDataService {
   // - data.deploymentfeatures.get on the project that is given in the request.
   GetDeploymentFeatures: (req: DeploymentFeaturesRequest) => Promise<DeploymentFeatures>;
   
+  // Pauses a deployment indentified by the given ID.
+  // When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.pause on the deployment
+  PauseDeployment: (req: arangodb_cloud_common_v1_IDOptions) => Promise<void>;
+  
   // Resumes a paused deployment identified by the given id.
   // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
   // Required permissions:
@@ -1650,7 +1710,8 @@ export interface IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   ListDiskPerformances: (req: ListDiskPerformancesRequest) => Promise<DiskPerformanceList>;
   
@@ -1777,6 +1838,15 @@ export class DataService implements IDataService {
     return api.get(url, undefined);
   }
   
+  // Fetch the ArangoDB version by its id (semver).
+  // Required permissions:
+  // - None
+  async GetVersion(req: arangodb_cloud_common_v1_IDOptions): Promise<Version> {
+    const path = `/api/data/v1/versions/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.get(url, undefined);
+  }
+  
   // Fetch the limits for server specifications for deployments
   // owned by the given projected, created in the given region.
   // Required permissions:
@@ -1875,6 +1945,16 @@ export class DataService implements IDataService {
     return api.post(url, req);
   }
   
+  // Pauses a deployment indentified by the given ID.
+  // When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+  // Required permissions:
+  // - data.deployment.pause on the deployment
+  async PauseDeployment(req: arangodb_cloud_common_v1_IDOptions): Promise<void> {
+    const path = `/api/data/v1/deployments/${encodeURIComponent(req.id || '')}/pause`;
+    const url = path + api.queryString(req, [`id`]);
+    return api.post(url, undefined);
+  }
+  
   // Resumes a paused deployment identified by the given id.
   // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
   // Required permissions:
@@ -1917,7 +1997,8 @@ export class DataService implements IDataService {
   
   // Lists disk performances that match all of the given filters.
   // Required permissions:
-  // - data.diskperformance.list (if deployment ID is provided)
+  // - data.diskperformance.list on the deployment (if deployment ID is provided)
+  // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
   // - None, authenticated only (if no deployment ID is provided)
   async ListDiskPerformances(req: ListDiskPerformancesRequest): Promise<DiskPerformanceList> {
     const url = `/api/data/v1/disk-performances`;

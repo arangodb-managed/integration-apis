@@ -155,6 +155,15 @@ service DataService {
         };
     }
 
+    // Fetch the ArangoDB version by its id (semver).
+    // Required permissions:
+    // - None
+    rpc GetVersion(common.v1.IDOptions) returns (Version) {
+        option (google.api.http) = {
+            get: "/api/data/v1/versions/{id}"
+        };
+    }
+
     // Fetch the limits for server specifications for deployments
     // owned by the given projected, created in the given region.
     // Required permissions:
@@ -255,6 +264,16 @@ service DataService {
         };
     }
 
+    // Pauses a deployment indentified by the given ID.
+    // When PauseDeployment is invoked on a deployment that is not allowed to pause or has is_paused set, an PreconditionFailed error is returned.
+    // Required permissions:
+    // - data.deployment.pause on the deployment
+    rpc PauseDeployment(arangodb.cloud.common.v1.IDOptions) returns (arangodb.cloud.common.v1.Empty){
+        option (google.api.http) = {
+            post: "/api/data/v1/deployments/{id}/pause"
+        };
+    }
+
     // Resumes a paused deployment identified by the given id.
     // When ResumeDeployment is invoked on a deployment that has is_paused not set, an PreconditionFailed error is returned.
     // Required permissions:
@@ -297,7 +316,8 @@ service DataService {
 
     // Lists disk performances that match all of the given filters.
     // Required permissions:
-    // - data.diskperformance.list (if deployment ID is provided)
+    // - data.diskperformance.list on the deployment (if deployment ID is provided)
+    // - data.diskperformance.list on the organization (if organization ID is provided, but deployment ID is not)
     // - None, authenticated only (if no deployment ID is provided)
     rpc ListDiskPerformances(ListDiskPerformancesRequest) returns (DiskPerformanceList) {
         option (google.api.http) = {
@@ -315,6 +335,7 @@ service DataService {
             body: "*"
         };
     }
+
 }
 
 // RotateDeploymentServerRequest request for rotating out servers for a deployment
@@ -668,6 +689,8 @@ message Deployment {
     message BackupRestoreStatus {
         // The revision of the used BackupRestoreSpec 
         int32 revision = 1;
+        // The timestamp of when the backup restore status was updated.
+        google.protobuf.Timestamp last_updated_at = 2;
         // Set if the deployment is preparing or restoring a backup
         bool restoring = 10;
         // Status of the restore backup operation.
@@ -706,6 +729,9 @@ message Deployment {
         int32 revision = 1;
         // The timestamp of when the last revision has been updated.
         google.protobuf.Timestamp last_updated_at = 2;
+        // Identifier of the user that restored this backup.
+        // This is a read-only value.
+        string restored_by_id = 3;
         // Identifier of a backup to restore to.
         string backup_id = 10;
     }
@@ -755,6 +781,12 @@ message Deployment {
     // Optional identifier of the deployment profile for this deployment.
     // After creation, this value cannot be changed.
     string deployment_profile_id = 614;
+
+    // Determines if deployment is using platform authentication
+    bool is_platform_authentication_enabled = 615;
+
+    // The (optional) intended use-case for this deployment
+    string intended_use_case = 616;
 }
 
 // NodeSize specifies the size constraints of different data nodes.
@@ -798,6 +830,11 @@ message NodeSizesRequest {
     // Optional identifier of organization that will own a deployment.
     // Ignored if project_id or deployment_id is set.
     string organization_id = 5;
+    // Optional field to include node sizes that are otherwise restricted
+    // for the specified projectID / organizationID.
+    // By default, the result is restricted based on the organization and project tiers/quotas.
+    // Ignored when project_id is "all" and organization_id is not provided.
+    bool include_restricted = 7;
 }
 
 // DeploymentModel specifies the a specific model of deploying
@@ -837,6 +874,10 @@ message CPUSizeList {
 message ListCPUSizesRequest {
     // Identifier of project that will own a deployment.
     string project_id = 1;
+    // Optional identifier of a deployment for which CPU sizes are requested.
+    // If specified, only those CPU sizes are listed, that an existing deployment is allowed to have.
+    // If specified, project_id field is ignored, and instead read from the deployment.
+    string deployment_id = 2;
 }
 
 // Request arguments for GetDeploymentCredentials
@@ -877,6 +918,8 @@ message Version {
     UpgradeVersionRecommendation upgrade_recommendation = 3;
     // If set, this version is not longer actively supported.
     bool is_end_of_life = 4;
+    // ArangoDB version release notes
+    string release_notes_url = 5;
 }
 
 // ReplaceVersionBy holds replacement instructions.
@@ -1223,6 +1266,10 @@ message DeploymentPrice {
 message DeploymentFeatures {
     // Is the use of an IAM provider available?
     bool iamprovider = 1;
+    // Is the use of the pause feature available?
+    bool pause = 2;
+    // Is the use of the ML features available?
+    bool ml = 3;
 }
 
 // Request arguments for GetDeploymentFeatures
@@ -1256,6 +1303,11 @@ message ListDiskPerformancesRequest {
     // Amount of disk space (in GB) to allocate for each dbserver.
     // This field is ignored when a deployment_id is provided, otherwise required. 
     int32 dbserver_disk_size = 3;
+    // Optional identifier of the organization for which the disk performances need to be listed.
+    // If specified, only those disk performances are listed that the organization is allowed to use
+    // for a deployment of a given node_size_id.
+    // This field is ignored when a deployment_id is provided.
+    string organization_id = 4;
     // Identifier of the deloyment, used to fill-out the region, node-size and disk-size.
     string deployment_id = 10;
 }

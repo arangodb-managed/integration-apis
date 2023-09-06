@@ -26,6 +26,11 @@ class AuthServiceStub(object):
                 request_serializer=auth_dot_v1_dot_auth__pb2.AuthorizeRequest.SerializeToString,
                 response_deserializer=common_dot_v1_dot_common__pb2.Empty.FromString,
                 )
+        self.Logout = channel.unary_unary(
+                '/arangodb.cloud.auth.v1.AuthService/Logout',
+                request_serializer=common_dot_v1_dot_common__pb2.Empty.SerializeToString,
+                response_deserializer=common_dot_v1_dot_common__pb2.Empty.FromString,
+                )
 
 
 class AuthServiceServicer(object):
@@ -54,6 +59,14 @@ class AuthServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Logout(self, request, context):
+        """Logout the user from auth dashboard by deleting the cookie
+        - None (since the subject is always the authenticated user).
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -65,6 +78,11 @@ def add_AuthServiceServicer_to_server(servicer, server):
             'Authorize': grpc.unary_unary_rpc_method_handler(
                     servicer.Authorize,
                     request_deserializer=auth_dot_v1_dot_auth__pb2.AuthorizeRequest.FromString,
+                    response_serializer=common_dot_v1_dot_common__pb2.Empty.SerializeToString,
+            ),
+            'Logout': grpc.unary_unary_rpc_method_handler(
+                    servicer.Logout,
+                    request_deserializer=common_dot_v1_dot_common__pb2.Empty.FromString,
                     response_serializer=common_dot_v1_dot_common__pb2.Empty.SerializeToString,
             ),
     }
@@ -108,6 +126,23 @@ class AuthService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/arangodb.cloud.auth.v1.AuthService/Authorize',
             auth_dot_v1_dot_auth__pb2.AuthorizeRequest.SerializeToString,
+            common_dot_v1_dot_common__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Logout(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/arangodb.cloud.auth.v1.AuthService/Logout',
+            common_dot_v1_dot_common__pb2.Empty.SerializeToString,
             common_dot_v1_dot_common__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
