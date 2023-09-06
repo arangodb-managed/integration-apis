@@ -22,7 +22,7 @@ package v1
 
 const (
 	// APIIDDataService contains identifier of this API
-	APIIDDataService = "dataservie/v1"
+	APIIDDataService = "dataservice/v1"
 	// APIMajorVersion contains major version of this API
 	APIMajorVersion = 1
 	// APIMinorVersion contains minor version of this API
