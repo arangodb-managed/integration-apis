@@ -7,11 +7,11 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class AuthorizeRequest(_message.Message):
-    __slots__ = ["callback_url", "resource_id", "resource_type"]
-    CALLBACK_URL_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["resource_id", "resource_type", "callback_url"]
     RESOURCE_ID_FIELD_NUMBER: _ClassVar[int]
     RESOURCE_TYPE_FIELD_NUMBER: _ClassVar[int]
-    callback_url: str
+    CALLBACK_URL_FIELD_NUMBER: _ClassVar[int]
     resource_id: str
     resource_type: str
+    callback_url: str
     def __init__(self, resource_id: _Optional[str] = ..., resource_type: _Optional[str] = ..., callback_url: _Optional[str] = ...) -> None: ...

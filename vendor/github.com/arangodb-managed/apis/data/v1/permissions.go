@@ -37,6 +37,8 @@ const (
 	PermissionDeploymentDelete = "data.deployment.delete"
 	// PermissionDeploymentRestoreBackup is needed for restoring a backup of a deployment
 	PermissionDeploymentRestoreBackup = "data.deployment.restore-backup"
+	// PermissionDeploymentPause is needed for pausing a deployment
+	PermissionDeploymentPause = "data.deployment.pause"
 	// PermissionDeploymentResume is needed for resuming a paused deployment
 	PermissionDeploymentResume = "data.deployment.resume"
 	// PermissionDeploymentRotateServer is needed to rotate a server belonging to a deployment
@@ -47,6 +49,10 @@ const (
 	PermissionDeploymentRebalanceShards = "data.deployment.rebalance-shards"
 	// PermissionDeploymentUpdateScheduledRootPasswordRotation is needed to update scheduled root password rotation setting for a deployment
 	PermissionDeploymentUpdateScheduledRootPasswordRotation = "data.deployment.update-scheduled-root-password-rotation"
+	// PermissionDeploymentReadOnlyAccess is needed to give user read only permission for deployment
+	PermissionDeploymentReadOnlyAccess = "data.deployment.read-only-access"
+	// PermissionDeploymentFullAccess is needed to give user full access for deployment
+	PermissionDeploymentFullAccess = "data.deployment.full-access"
 )
 
 const (
@@ -110,4 +116,11 @@ const (
 
 	// PermissionDiskPerformanceList is needed for listing disk performances for a specific deployment
 	PermissionDiskPerformanceList = "data.diskperformance.list"
+)
+
+const (
+	// Dataloader permissions
+
+	// PermissionDataLoaderImport is needed for importing data using dataloader for a specific deployment
+	PermissionDataLoaderImport = "dataloader.deployment.import"
 )

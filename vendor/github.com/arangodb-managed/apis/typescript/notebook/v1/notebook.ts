@@ -117,6 +117,12 @@ export interface Notebook {
   // googleTypes.Timestamp
   deleted_at?: googleTypes.Timestamp;
   
+  // If set, the Notebook is created for use along with ArangoML.
+  // This field will be set to `true` if ML services are enabled at the time of creating the notebook.
+  // This is a read-only value.
+  // boolean
+  ml_enabled?: boolean;
+  
   // Status of the notebook.
   // This is a read-only value.
   // Status
@@ -159,6 +165,11 @@ export interface NotebookModel {
   // Minimum amount of disk space (in GiB) available to the notebook.
   // number
   min_disk_size?: number;
+  
+  // GPU units allocated to the notebook.
+  // 1 GPU unit equals 1 physical / virtual GPU.
+  // number
+  gpu?: number;
 }
 
 // List of notebook models.
@@ -193,6 +204,10 @@ export interface Status {
   // string
   endpoint?: string;
   
+  // The timestamp of when this notebook was last reported to be active.
+  // googleTypes.Timestamp
+  last_active_at?: googleTypes.Timestamp;
+  
   // Resource usage of the notebook.
   // Status_Usage
   usage?: Status_Usage;
@@ -219,6 +234,14 @@ export interface Status_Usage {
   // Last known CPU limit in vCPU units
   // number
   last_cpu_limit?: number;
+  
+  // Last known GPU usage in GPU units
+  // number
+  last_gpu_usage?: number;
+  
+  // Last known GPU limit in GPU units
+  // number
+  last_gpu_limit?: number;
 }
 
 // Notebook service is used to manage notebooks.

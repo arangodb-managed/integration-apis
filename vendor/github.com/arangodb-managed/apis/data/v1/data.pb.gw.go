@@ -663,6 +663,60 @@ func local_request_DataService_GetDefaultVersion_0(ctx context.Context, marshale
 
 }
 
+func request_DataService_GetVersion_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := client.GetVersion(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DataService_GetVersion_0(ctx context.Context, marshaler runtime.Marshaler, server DataServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := server.GetVersion(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 var (
 	filter_DataService_GetServersSpecLimits_0 = &utilities.DoubleArray{Encoding: map[string]int{"project_id": 0, "region_id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
@@ -905,6 +959,10 @@ func local_request_DataService_ListDeploymentModels_0(ctx context.Context, marsh
 
 }
 
+var (
+	filter_DataService_ListCPUSizes_0 = &utilities.DoubleArray{Encoding: map[string]int{"project_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_DataService_ListCPUSizes_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListCPUSizesRequest
 	var metadata runtime.ServerMetadata
@@ -925,6 +983,13 @@ func request_DataService_ListCPUSizes_0(ctx context.Context, marshaler runtime.M
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DataService_ListCPUSizes_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListCPUSizes(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -952,6 +1017,13 @@ func local_request_DataService_ListCPUSizes_0(ctx context.Context, marshaler run
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project_id", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DataService_ListCPUSizes_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListCPUSizes(ctx, &protoReq)
@@ -1205,6 +1277,60 @@ func local_request_DataService_GetDeploymentFeatures_0(ctx context.Context, mars
 	}
 
 	msg, err := server.GetDeploymentFeatures(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_DataService_PauseDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client DataServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := client.PauseDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_DataService_PauseDeployment_0(ctx context.Context, marshaler runtime.Marshaler, server DataServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq v1.IDOptions
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+	}
+
+	protoReq.Id, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	msg, err := server.PauseDeployment(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -1783,6 +1909,26 @@ func RegisterDataServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("GET", pattern_DataService_GetVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DataService_GetVersion_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_GetVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_DataService_GetServersSpecLimits_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1980,6 +2126,26 @@ func RegisterDataServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		}
 
 		forward_DataService_GetDeploymentFeatures_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_DataService_PauseDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_DataService_PauseDeployment_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_PauseDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -2384,6 +2550,26 @@ func RegisterDataServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("GET", pattern_DataService_GetVersion_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DataService_GetVersion_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_GetVersion_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_DataService_GetServersSpecLimits_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -2584,6 +2770,26 @@ func RegisterDataServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("POST", pattern_DataService_PauseDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_DataService_PauseDeployment_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_DataService_PauseDeployment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("POST", pattern_DataService_ResumeDeployment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -2732,6 +2938,8 @@ var (
 
 	pattern_DataService_GetDefaultVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "data", "v1", "versions", "default"}, "", runtime.AssumeColonVerbOpt(true)))
 
+	pattern_DataService_GetVersion_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "data", "v1", "versions", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+
 	pattern_DataService_GetServersSpecLimits_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"api", "data", "v1", "projects", "project_id", "regions", "region_id", "limits"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_DataService_ListNodeSizes_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"api", "data", "v1", "projects", "project_id", "regions", "region_id", "nodesizes"}, "", runtime.AssumeColonVerbOpt(true)))
@@ -2751,6 +2959,8 @@ var (
 	pattern_DataService_CalculateDeploymentPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "data", "v1", "deployment-price", "calculate"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_DataService_GetDeploymentFeatures_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "data", "v1", "deployment-features"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_DataService_PauseDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "id", "pause"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_DataService_ResumeDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "data", "v1", "deployments", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -2790,6 +3000,8 @@ var (
 
 	forward_DataService_GetDefaultVersion_0 = runtime.ForwardResponseMessage
 
+	forward_DataService_GetVersion_0 = runtime.ForwardResponseMessage
+
 	forward_DataService_GetServersSpecLimits_0 = runtime.ForwardResponseMessage
 
 	forward_DataService_ListNodeSizes_0 = runtime.ForwardResponseMessage
@@ -2809,6 +3021,8 @@ var (
 	forward_DataService_CalculateDeploymentPrice_0 = runtime.ForwardResponseMessage
 
 	forward_DataService_GetDeploymentFeatures_0 = runtime.ForwardResponseMessage
+
+	forward_DataService_PauseDeployment_0 = runtime.ForwardResponseMessage
 
 	forward_DataService_ResumeDeployment_0 = runtime.ForwardResponseMessage
 
