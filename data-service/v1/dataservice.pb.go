@@ -65,6 +65,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DataServiceClient interface {
 	// Fetch the credentials for the root user of the deployment with given ID.
+	// When the integration sidecar is running in the context of a single deployment, the provided ID is optional, however if provided it should match.
 	// Required permissions:
 	// - dataservice.deployment.get-root-credentials for the deployment.
 	GetDeploymentRootCredentials(ctx context.Context, in *v1.IDOptions, opts ...grpc.CallOption) (*v11.DeploymentCredentials, error)
@@ -90,6 +91,7 @@ func (c *dataServiceClient) GetDeploymentRootCredentials(ctx context.Context, in
 // DataServiceServer is the server API for DataService service.
 type DataServiceServer interface {
 	// Fetch the credentials for the root user of the deployment with given ID.
+	// When the integration sidecar is running in the context of a single deployment, the provided ID is optional, however if provided it should match.
 	// Required permissions:
 	// - dataservice.deployment.get-root-credentials for the deployment.
 	GetDeploymentRootCredentials(context.Context, *v1.IDOptions) (*v11.DeploymentCredentials, error)

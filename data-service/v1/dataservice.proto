@@ -33,6 +33,7 @@ import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 // DataService is the API used to manage deployments.
 service DataService {
     // Fetch the credentials for the root user of the deployment with given ID.
+    // When the integration sidecar is running in the context of a single deployment, the provided ID is optional, however if provided it should match.
     // Required permissions:
     // - dataservice.deployment.get-root-credentials for the deployment.
     rpc GetDeploymentRootCredentials(arangodb.cloud.common.v1.IDOptions) returns (arangodb.cloud.data.v1.DeploymentCredentials);
