@@ -1,5 +1,5 @@
 from common.v1 import common_pb2 as _common_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -9,7 +9,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class IPAllowlist(_message.Message):
-    __slots__ = ["id", "url", "name", "description", "project_id", "cidr_ranges", "created_at", "deleted_at", "is_deleted", "created_by_id", "locked", "warnings", "remote_inspection_allowed"]
+    __slots__ = ("id", "url", "name", "description", "project_id", "cidr_ranges", "created_at", "deleted_at", "is_deleted", "created_by_id", "locked", "warnings", "remote_inspection_allowed")
     ID_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
@@ -39,15 +39,15 @@ class IPAllowlist(_message.Message):
     def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., cidr_ranges: _Optional[_Iterable[str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., created_by_id: _Optional[str] = ..., locked: bool = ..., warnings: _Optional[_Iterable[str]] = ..., remote_inspection_allowed: bool = ...) -> None: ...
 
 class IPAllowlistList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[IPAllowlist]
     def __init__(self, items: _Optional[_Iterable[_Union[IPAllowlist, _Mapping]]] = ...) -> None: ...
 
 class IAMProvider(_message.Message):
-    __slots__ = ["id", "url", "name", "description", "project_id", "type", "created_at", "deleted_at", "is_deleted", "created_by_id", "is_default", "locked", "ldap_settings"]
+    __slots__ = ("id", "url", "name", "description", "project_id", "type", "created_at", "deleted_at", "is_deleted", "created_by_id", "is_default", "locked", "ldap_settings")
     class LDAPSettings(_message.Message):
-        __slots__ = ["server", "port", "base_distinguished_name", "bind_distinguished_name", "bind_password", "refresh_rate", "tls_ca_certificate_pem", "serialized", "serialize_timeout_sec", "retries", "restart", "referrals", "timeout_sec", "network_timeout_sec", "async_connect", "prefix", "suffix", "search_scope", "search_filter", "search_attribute", "roles_attribute_name", "roles_search", "roles_include", "roles_exclude", "roles_transformation", "super_user_role"]
+        __slots__ = ("server", "port", "base_distinguished_name", "bind_distinguished_name", "bind_password", "refresh_rate", "tls_ca_certificate_pem", "serialized", "serialize_timeout_sec", "retries", "restart", "referrals", "timeout_sec", "network_timeout_sec", "async_connect", "prefix", "suffix", "search_scope", "search_filter", "search_attribute", "roles_attribute_name", "roles_search", "roles_include", "roles_exclude", "roles_transformation", "super_user_role")
         SERVER_FIELD_NUMBER: _ClassVar[int]
         PORT_FIELD_NUMBER: _ClassVar[int]
         BASE_DISTINGUISHED_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -130,7 +130,7 @@ class IAMProvider(_message.Message):
     def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., type: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., created_by_id: _Optional[str] = ..., is_default: bool = ..., locked: bool = ..., ldap_settings: _Optional[_Union[IAMProvider.LDAPSettings, _Mapping]] = ...) -> None: ...
 
 class IAMProviderList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[IAMProvider]
     def __init__(self, items: _Optional[_Iterable[_Union[IAMProvider, _Mapping]]] = ...) -> None: ...

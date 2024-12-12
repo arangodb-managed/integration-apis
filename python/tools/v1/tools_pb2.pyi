@@ -8,7 +8,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ToolsVersion(_message.Message):
-    __slots__ = ["latest_version", "download_url", "is_compatible"]
+    __slots__ = ("latest_version", "download_url", "is_compatible")
     LATEST_VERSION_FIELD_NUMBER: _ClassVar[int]
     DOWNLOAD_URL_FIELD_NUMBER: _ClassVar[int]
     IS_COMPATIBLE_FIELD_NUMBER: _ClassVar[int]
@@ -18,7 +18,7 @@ class ToolsVersion(_message.Message):
     def __init__(self, latest_version: _Optional[str] = ..., download_url: _Optional[str] = ..., is_compatible: bool = ...) -> None: ...
 
 class GetLatestVersionRequest(_message.Message):
-    __slots__ = ["name", "expected_api_versions"]
+    __slots__ = ("name", "expected_api_versions")
     NAME_FIELD_NUMBER: _ClassVar[int]
     EXPECTED_API_VERSIONS_FIELD_NUMBER: _ClassVar[int]
     name: str
@@ -26,7 +26,7 @@ class GetLatestVersionRequest(_message.Message):
     def __init__(self, name: _Optional[str] = ..., expected_api_versions: _Optional[_Iterable[_Union[APIVersionPair, _Mapping]]] = ...) -> None: ...
 
 class APIVersionPair(_message.Message):
-    __slots__ = ["api_id", "version"]
+    __slots__ = ("api_id", "version")
     API_ID_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     api_id: str

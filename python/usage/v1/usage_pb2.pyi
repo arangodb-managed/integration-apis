@@ -1,5 +1,5 @@
 from common.v1 import common_pb2 as _common_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -9,9 +9,9 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class UsageItem(_message.Message):
-    __slots__ = ["id", "url", "kind", "resource", "starts_at", "ends_at", "has_ended", "tier_id", "invoice_id", "deployment_size", "network_transfer_size", "backup_storage_size", "auditlog_size", "auditlog_storage_size", "notebook_size", "mlservices_size"]
+    __slots__ = ("id", "url", "kind", "resource", "starts_at", "ends_at", "has_ended", "tier_id", "invoice_id", "deployment_size", "network_transfer_size", "backup_storage_size", "auditlog_size", "auditlog_storage_size", "notebook_size", "mlservices_size", "mljob_size", "graphanalyticsjob_size")
     class Resource(_message.Message):
-        __slots__ = ["id", "url", "kind", "description", "organization_id", "organization_name", "project_id", "project_name", "deployment_id", "deployment_name", "deployment_member_name", "cloud_provider_id", "cloud_region_id", "support_plan_id", "deployment_model", "prepaid_deployment_id", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at"]
+        __slots__ = ("id", "url", "kind", "description", "organization_id", "organization_name", "project_id", "project_name", "deployment_id", "deployment_name", "deployment_member_name", "cloud_provider_id", "cloud_region_id", "support_plan_id", "deployment_model", "prepaid_deployment_id", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at", "credit_bundle_ids")
         ID_FIELD_NUMBER: _ClassVar[int]
         URL_FIELD_NUMBER: _ClassVar[int]
         KIND_FIELD_NUMBER: _ClassVar[int]
@@ -30,6 +30,7 @@ class UsageItem(_message.Message):
         PREPAID_DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
         PREPAID_DEPLOYMENT_STARTS_AT_FIELD_NUMBER: _ClassVar[int]
         PREPAID_DEPLOYMENT_ENDS_AT_FIELD_NUMBER: _ClassVar[int]
+        CREDIT_BUNDLE_IDS_FIELD_NUMBER: _ClassVar[int]
         id: str
         url: str
         kind: str
@@ -48,9 +49,10 @@ class UsageItem(_message.Message):
         prepaid_deployment_id: str
         prepaid_deployment_starts_at: _timestamp_pb2.Timestamp
         prepaid_deployment_ends_at: _timestamp_pb2.Timestamp
-        def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., kind: _Optional[str] = ..., description: _Optional[str] = ..., organization_id: _Optional[str] = ..., organization_name: _Optional[str] = ..., project_id: _Optional[str] = ..., project_name: _Optional[str] = ..., deployment_id: _Optional[str] = ..., deployment_name: _Optional[str] = ..., deployment_member_name: _Optional[str] = ..., cloud_provider_id: _Optional[str] = ..., cloud_region_id: _Optional[str] = ..., support_plan_id: _Optional[str] = ..., deployment_model: _Optional[str] = ..., prepaid_deployment_id: _Optional[str] = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+        credit_bundle_ids: _containers.RepeatedScalarFieldContainer[str]
+        def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., kind: _Optional[str] = ..., description: _Optional[str] = ..., organization_id: _Optional[str] = ..., organization_name: _Optional[str] = ..., project_id: _Optional[str] = ..., project_name: _Optional[str] = ..., deployment_id: _Optional[str] = ..., deployment_name: _Optional[str] = ..., deployment_member_name: _Optional[str] = ..., cloud_provider_id: _Optional[str] = ..., cloud_region_id: _Optional[str] = ..., support_plan_id: _Optional[str] = ..., deployment_model: _Optional[str] = ..., prepaid_deployment_id: _Optional[str] = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., credit_bundle_ids: _Optional[_Iterable[str]] = ...) -> None: ...
     class DeploymentSize(_message.Message):
-        __slots__ = ["coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "agents", "agent_memory_size", "agent_disk_size", "node_size_id", "disk_performance_id", "addon_ids", "is_paused"]
+        __slots__ = ("coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "agents", "agent_memory_size", "agent_disk_size", "node_size_id", "disk_performance_id", "addon_ids", "is_paused")
         COORDINATORS_FIELD_NUMBER: _ClassVar[int]
         COORDINATOR_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         DBSERVERS_FIELD_NUMBER: _ClassVar[int]
@@ -77,7 +79,7 @@ class UsageItem(_message.Message):
         is_paused: bool
         def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., node_size_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., addon_ids: _Optional[_Iterable[str]] = ..., is_paused: bool = ...) -> None: ...
     class NetworkTransferSize(_message.Message):
-        __slots__ = ["destination", "total_transfer_ingress_size", "total_transfer_egress_size"]
+        __slots__ = ("destination", "total_transfer_ingress_size", "total_transfer_egress_size")
         DESTINATION_FIELD_NUMBER: _ClassVar[int]
         TOTAL_TRANSFER_INGRESS_SIZE_FIELD_NUMBER: _ClassVar[int]
         TOTAL_TRANSFER_EGRESS_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -86,12 +88,12 @@ class UsageItem(_message.Message):
         total_transfer_egress_size: int
         def __init__(self, destination: _Optional[str] = ..., total_transfer_ingress_size: _Optional[int] = ..., total_transfer_egress_size: _Optional[int] = ...) -> None: ...
     class BackupStorageSize(_message.Message):
-        __slots__ = ["cloud_storage_size"]
+        __slots__ = ("cloud_storage_size",)
         CLOUD_STORAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
         cloud_storage_size: int
         def __init__(self, cloud_storage_size: _Optional[int] = ...) -> None: ...
     class AuditLogSize(_message.Message):
-        __slots__ = ["destination_type", "event_count", "event_size", "https_post_count"]
+        __slots__ = ("destination_type", "event_count", "event_size", "https_post_count")
         DESTINATION_TYPE_FIELD_NUMBER: _ClassVar[int]
         EVENT_COUNT_FIELD_NUMBER: _ClassVar[int]
         EVENT_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -102,12 +104,12 @@ class UsageItem(_message.Message):
         https_post_count: int
         def __init__(self, destination_type: _Optional[str] = ..., event_count: _Optional[int] = ..., event_size: _Optional[int] = ..., https_post_count: _Optional[int] = ...) -> None: ...
     class AuditLogStorageSize(_message.Message):
-        __slots__ = ["cloud_storage_size"]
+        __slots__ = ("cloud_storage_size",)
         CLOUD_STORAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
         cloud_storage_size: int
         def __init__(self, cloud_storage_size: _Optional[int] = ...) -> None: ...
     class NotebookSize(_message.Message):
-        __slots__ = ["cpu_size", "memory_size", "disk_size", "is_paused", "notebook_model_id", "gpu_size"]
+        __slots__ = ("cpu_size", "memory_size", "disk_size", "is_paused", "notebook_model_id", "gpu_size")
         CPU_SIZE_FIELD_NUMBER: _ClassVar[int]
         MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -122,7 +124,7 @@ class UsageItem(_message.Message):
         gpu_size: float
         def __init__(self, cpu_size: _Optional[float] = ..., memory_size: _Optional[int] = ..., disk_size: _Optional[int] = ..., is_paused: bool = ..., notebook_model_id: _Optional[str] = ..., gpu_size: _Optional[float] = ...) -> None: ...
     class MLServicesSize(_message.Message):
-        __slots__ = ["training_apis", "training_api_memory_size", "training_api_cpu_size", "prediction_apis", "prediction_api_memory_size", "prediction_api_cpu_size", "projects_apis", "projects_api_memory_size", "projects_api_cpu_size"]
+        __slots__ = ("training_apis", "training_api_memory_size", "training_api_cpu_size", "prediction_apis", "prediction_api_memory_size", "prediction_api_cpu_size", "projects_apis", "projects_api_memory_size", "projects_api_cpu_size")
         TRAINING_APIS_FIELD_NUMBER: _ClassVar[int]
         TRAINING_API_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         TRAINING_API_CPU_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -142,6 +144,32 @@ class UsageItem(_message.Message):
         projects_api_memory_size: int
         projects_api_cpu_size: float
         def __init__(self, training_apis: _Optional[int] = ..., training_api_memory_size: _Optional[int] = ..., training_api_cpu_size: _Optional[float] = ..., prediction_apis: _Optional[int] = ..., prediction_api_memory_size: _Optional[int] = ..., prediction_api_cpu_size: _Optional[float] = ..., projects_apis: _Optional[int] = ..., projects_api_memory_size: _Optional[int] = ..., projects_api_cpu_size: _Optional[float] = ...) -> None: ...
+    class MLJobSize(_message.Message):
+        __slots__ = ("memory_size", "cpu_size", "gpu_size", "job_id", "job_type")
+        MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
+        CPU_SIZE_FIELD_NUMBER: _ClassVar[int]
+        GPU_SIZE_FIELD_NUMBER: _ClassVar[int]
+        JOB_ID_FIELD_NUMBER: _ClassVar[int]
+        JOB_TYPE_FIELD_NUMBER: _ClassVar[int]
+        memory_size: int
+        cpu_size: float
+        gpu_size: float
+        job_id: str
+        job_type: str
+        def __init__(self, memory_size: _Optional[int] = ..., cpu_size: _Optional[float] = ..., gpu_size: _Optional[float] = ..., job_id: _Optional[str] = ..., job_type: _Optional[str] = ...) -> None: ...
+    class GraphAnalyticsJobSize(_message.Message):
+        __slots__ = ("memory_size", "cpu_size", "gpu_size", "job_id", "job_type")
+        MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
+        CPU_SIZE_FIELD_NUMBER: _ClassVar[int]
+        GPU_SIZE_FIELD_NUMBER: _ClassVar[int]
+        JOB_ID_FIELD_NUMBER: _ClassVar[int]
+        JOB_TYPE_FIELD_NUMBER: _ClassVar[int]
+        memory_size: int
+        cpu_size: float
+        gpu_size: float
+        job_id: str
+        job_type: str
+        def __init__(self, memory_size: _Optional[int] = ..., cpu_size: _Optional[float] = ..., gpu_size: _Optional[float] = ..., job_id: _Optional[str] = ..., job_type: _Optional[str] = ...) -> None: ...
     ID_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     KIND_FIELD_NUMBER: _ClassVar[int]
@@ -158,6 +186,8 @@ class UsageItem(_message.Message):
     AUDITLOG_STORAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     NOTEBOOK_SIZE_FIELD_NUMBER: _ClassVar[int]
     MLSERVICES_SIZE_FIELD_NUMBER: _ClassVar[int]
+    MLJOB_SIZE_FIELD_NUMBER: _ClassVar[int]
+    GRAPHANALYTICSJOB_SIZE_FIELD_NUMBER: _ClassVar[int]
     id: str
     url: str
     kind: str
@@ -174,16 +204,18 @@ class UsageItem(_message.Message):
     auditlog_storage_size: UsageItem.AuditLogStorageSize
     notebook_size: UsageItem.NotebookSize
     mlservices_size: UsageItem.MLServicesSize
-    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., kind: _Optional[str] = ..., resource: _Optional[_Union[UsageItem.Resource, _Mapping]] = ..., starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., has_ended: bool = ..., tier_id: _Optional[str] = ..., invoice_id: _Optional[str] = ..., deployment_size: _Optional[_Union[UsageItem.DeploymentSize, _Mapping]] = ..., network_transfer_size: _Optional[_Union[UsageItem.NetworkTransferSize, _Mapping]] = ..., backup_storage_size: _Optional[_Union[UsageItem.BackupStorageSize, _Mapping]] = ..., auditlog_size: _Optional[_Union[UsageItem.AuditLogSize, _Mapping]] = ..., auditlog_storage_size: _Optional[_Union[UsageItem.AuditLogStorageSize, _Mapping]] = ..., notebook_size: _Optional[_Union[UsageItem.NotebookSize, _Mapping]] = ..., mlservices_size: _Optional[_Union[UsageItem.MLServicesSize, _Mapping]] = ...) -> None: ...
+    mljob_size: UsageItem.MLJobSize
+    graphanalyticsjob_size: UsageItem.GraphAnalyticsJobSize
+    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., kind: _Optional[str] = ..., resource: _Optional[_Union[UsageItem.Resource, _Mapping]] = ..., starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., has_ended: bool = ..., tier_id: _Optional[str] = ..., invoice_id: _Optional[str] = ..., deployment_size: _Optional[_Union[UsageItem.DeploymentSize, _Mapping]] = ..., network_transfer_size: _Optional[_Union[UsageItem.NetworkTransferSize, _Mapping]] = ..., backup_storage_size: _Optional[_Union[UsageItem.BackupStorageSize, _Mapping]] = ..., auditlog_size: _Optional[_Union[UsageItem.AuditLogSize, _Mapping]] = ..., auditlog_storage_size: _Optional[_Union[UsageItem.AuditLogStorageSize, _Mapping]] = ..., notebook_size: _Optional[_Union[UsageItem.NotebookSize, _Mapping]] = ..., mlservices_size: _Optional[_Union[UsageItem.MLServicesSize, _Mapping]] = ..., mljob_size: _Optional[_Union[UsageItem.MLJobSize, _Mapping]] = ..., graphanalyticsjob_size: _Optional[_Union[UsageItem.GraphAnalyticsJobSize, _Mapping]] = ...) -> None: ...
 
 class UsageItemList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[UsageItem]
     def __init__(self, items: _Optional[_Iterable[_Union[UsageItem, _Mapping]]] = ...) -> None: ...
 
 class ListUsageItemsRequest(_message.Message):
-    __slots__ = ["organization_id", "to", "sort_descending", "kind", "options", "resource_url", "resource_kind", "project_id", "deployment_id", "node_size_id", "region_id", "has_no_invoice_id", "has_invoice_id", "invoice_id", "not_start_before"]
+    __slots__ = ("organization_id", "to", "sort_descending", "kind", "options", "resource_url", "resource_kind", "project_id", "deployment_id", "node_size_id", "region_id", "has_no_invoice_id", "has_invoice_id", "invoice_id", "not_start_before")
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     FROM_FIELD_NUMBER: _ClassVar[int]
     TO_FIELD_NUMBER: _ClassVar[int]

@@ -8,7 +8,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class SupportRequest(_message.Message):
-    __slots__ = ["id", "user_name", "user_id", "email_address", "organization_id", "project_id", "deployment_id", "description", "severity", "title"]
+    __slots__ = ("id", "user_name", "user_id", "email_address", "organization_id", "project_id", "deployment_id", "description", "severity", "title")
     ID_FIELD_NUMBER: _ClassVar[int]
     USER_NAME_FIELD_NUMBER: _ClassVar[int]
     USER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -32,7 +32,7 @@ class SupportRequest(_message.Message):
     def __init__(self, id: _Optional[str] = ..., user_name: _Optional[str] = ..., user_id: _Optional[str] = ..., email_address: _Optional[str] = ..., organization_id: _Optional[str] = ..., project_id: _Optional[str] = ..., deployment_id: _Optional[str] = ..., description: _Optional[str] = ..., severity: _Optional[str] = ..., title: _Optional[str] = ...) -> None: ...
 
 class Plan(_message.Message):
-    __slots__ = ["id", "name", "is_default", "description", "is_unavailable", "first_response_times", "support_hours"]
+    __slots__ = ("id", "name", "is_default", "description", "is_unavailable", "first_response_times", "support_hours")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     IS_DEFAULT_FIELD_NUMBER: _ClassVar[int]
@@ -50,7 +50,7 @@ class Plan(_message.Message):
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., is_default: bool = ..., description: _Optional[str] = ..., is_unavailable: bool = ..., first_response_times: _Optional[_Union[ResponseTimes, _Mapping]] = ..., support_hours: _Optional[str] = ...) -> None: ...
 
 class ResponseTimes(_message.Message):
-    __slots__ = ["critical", "high", "normal", "low"]
+    __slots__ = ("critical", "high", "normal", "low")
     CRITICAL_FIELD_NUMBER: _ClassVar[int]
     HIGH_FIELD_NUMBER: _ClassVar[int]
     NORMAL_FIELD_NUMBER: _ClassVar[int]
@@ -62,13 +62,13 @@ class ResponseTimes(_message.Message):
     def __init__(self, critical: _Optional[int] = ..., high: _Optional[int] = ..., normal: _Optional[int] = ..., low: _Optional[int] = ...) -> None: ...
 
 class PlanList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Plan]
     def __init__(self, items: _Optional[_Iterable[_Union[Plan, _Mapping]]] = ...) -> None: ...
 
 class ListPlansRequest(_message.Message):
-    __slots__ = ["options", "organization_id", "model"]
+    __slots__ = ("options", "organization_id", "model")
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     MODEL_FIELD_NUMBER: _ClassVar[int]
@@ -78,7 +78,7 @@ class ListPlansRequest(_message.Message):
     def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., organization_id: _Optional[str] = ..., model: _Optional[str] = ...) -> None: ...
 
 class FaqGroup(_message.Message):
-    __slots__ = ["id", "name"]
+    __slots__ = ("id", "name")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     id: str
@@ -86,13 +86,13 @@ class FaqGroup(_message.Message):
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
 
 class FaqGroupList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[FaqGroup]
     def __init__(self, items: _Optional[_Iterable[_Union[FaqGroup, _Mapping]]] = ...) -> None: ...
 
 class FaqGroupEntry(_message.Message):
-    __slots__ = ["question", "answer"]
+    __slots__ = ("question", "answer")
     QUESTION_FIELD_NUMBER: _ClassVar[int]
     ANSWER_FIELD_NUMBER: _ClassVar[int]
     question: str
@@ -100,7 +100,7 @@ class FaqGroupEntry(_message.Message):
     def __init__(self, question: _Optional[str] = ..., answer: _Optional[str] = ...) -> None: ...
 
 class FaqGroupEntryList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[FaqGroupEntry]
     def __init__(self, items: _Optional[_Iterable[_Union[FaqGroupEntry, _Mapping]]] = ...) -> None: ...

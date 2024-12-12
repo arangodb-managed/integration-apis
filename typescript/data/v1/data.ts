@@ -406,6 +406,8 @@ export interface Deployment {
   notification_settings?: Deployment_NotificationSettings;
   
   // Deployment's disk autoscaling settings
+  // [Deprecated] This setting isn't supported anymore.
+  // To increase disk space you need to switch to a larger node-size [e.g. A8 (with 80Gib)--> A16 (with 160 Gib)]
   // Deployment_DiskAutoSizeSettings
   disk_auto_size_settings?: Deployment_DiskAutoSizeSettings;
   
@@ -433,6 +435,15 @@ export interface Deployment {
   // The (optional) intended use-case for this deployment
   // string
   intended_use_case?: string;
+  
+  // If set to true, drop support for deprecated VST protocol and improve resilience.
+  // Defaults to false.
+  // boolean
+  drop_vst_support?: boolean;
+  
+  // Defines notifications attached to the Deployment
+  // Deployment_NotificationsEntry
+  notifications?: { [key: string]: Notification };
 }
 
 // Information about a backup restore.
@@ -495,7 +506,7 @@ export interface Deployment_CertificateSpec {
 // Deployment's disk autoscaling settings
 export interface Deployment_DiskAutoSizeSettings {
   // Maximum allowed disk size that a node can reach (in GB).
-  // This field is ignored, if the flexible model is used.
+  // [Deprecated] This setting isn't supported anymore.
   // number
   maximum_node_disk_size?: number;
 }
@@ -549,6 +560,13 @@ export interface Deployment_NotificationSettings {
   // Email addresses that notifications related to this deployment should be sent to.
   // string
   email_addresses?: string[];
+}
+export interface Deployment_NotificationsEntry {
+  // string
+  key?: string;
+  
+  // Notification
+  value?: Notification;
 }
 
 // Status of a single server (of the ArangoDB cluster)
@@ -687,6 +705,11 @@ export interface Deployment_ServersSpec {
   // defined by all databases and all collections.
   // number
   minimum_dbservers_count?: number;
+  
+  // The minimum amount of disk space (in GB) to allocate for dbservers based on the highest usage of all running DB servers.
+  // The nearest size (larger then indicated here) need to be depected if the provider doesn't support all values (See GetServersSpecLimits)
+  // number
+  minimum_dbserver_disk_size?: number;
 }
 
 // Status of the deployment
@@ -699,7 +722,6 @@ export interface Deployment_Status {
   // If a certificate with well known certificate is used, this
   // port is using the well known certificate.
   // Otherwise this port is using the self-signed certificate.
-  // This endpoint is recommended for human-to-database connections.
   // string
   endpoint?: string;
   
@@ -743,6 +765,15 @@ export interface Deployment_Status {
   // string
   endpoint_self_signed?: string;
   
+  // Endpoint URL used to reach the deployment on default port (443)
+  // This value will be empty during the creation of the deployment.
+  // If a certificate with well known certificate is used, this
+  // port is using the well known certificate.
+  // Otherwise this port is using the self-signed certificate.
+  // This endpoint is recommended for human-to-database connections.
+  // string
+  endpoint_default?: string;
+  
   // If set, this deployment has a private endpoint, however can contain the public endpoint as well.
   // When switching from a public endpoint to a private endpoint the public endpoint will
   // be available for an hour to support seemlessly migration to the private endpoint.
@@ -775,6 +806,12 @@ export interface Deployment_Status {
   // string
   endpoint_private_endpoint_self_signed?: string;
   
+  // Private Endpoint URL used to reach the deployment on default port (443)
+  // This value will be empty during the creation of the deployment & private endpoint.
+  // this port is using the well known certificate.
+  // string
+  endpoint_private_endpoint_default?: string;
+  
   // The status of backup restore (if applicable).
   // This field will be set to empty if a new revision of the spec is available
   // Deployment_BackupRestoreStatus
@@ -791,6 +828,10 @@ export interface Deployment_Status {
   // Set if the deployment is up-to-date and has no pending updates.
   // boolean
   is_up_to_date?: boolean;
+  
+  // Set if the deployment is in read-only mode.
+  // boolean
+  read_only?: boolean;
 }
 
 // Result for GetDeploymentCredentials
@@ -829,6 +870,10 @@ export interface DeploymentFeatures {
   // Is the use of the ML features available?
   // boolean
   ml?: boolean;
+  
+  // Is the use of monitoring feature available?
+  // boolean
+  monitoring?: boolean;
 }
 
 // Request arguments for GetDeploymentFeatures
@@ -871,6 +916,34 @@ export interface DeploymentModel {
   // Human readable name of the model (e.g. One shard)
   // string
   name?: string;
+  
+  // DeploymentModel_Features
+  features?: DeploymentModel_Features;
+  
+  // Limit the time-to-live of deployments created with this model.
+  // Time-to-live (till expiration) is expressed in seconds.
+  // A value of '0' means no expiration.
+  // number
+  deployment_ttl?: number;
+}
+
+// Features that are available to deployments of this model type.
+export interface DeploymentModel_Features {
+  // If set, ML is available as a trial only.
+  // boolean
+  ml_free_trial?: boolean;
+  
+  // If set, private endpoints are allowed for this deployment model.
+  // boolean
+  private_endpoints?: boolean;
+  
+  // If set, metrics endpoint integration is allowed for this deployment model.
+  // boolean
+  metrics_endpoint?: boolean;
+  
+  // If set, backups for this deployment model are allowed to be uploaded to the cloud.
+  // boolean
+  backup_uploads?: boolean;
 }
 
 // List of deployment models.
@@ -999,6 +1072,10 @@ export interface DeploymentPriceRequest {
   // Identifier of disk performance used for this deployment (if any).
   // string
   disk_performance_id?: string;
+  
+  // If set, request for prices based on ArangoGraph credits.
+  // boolean
+  use_credit_pricing?: boolean;
 }
 
 // Result of CalculateDeploymentSize
@@ -1226,6 +1303,11 @@ export interface ListDeploymentModelsRequest {
   // Identifier of project that will own a deployment.
   // string
   project_id?: string;
+  
+  // Optional identifier of a deployment, so the current model can be added to the list if needed
+  // This deployment should be inside the provided project
+  // string
+  deployment_id?: string;
 }
 
 // Request arguments for ListDeploymentsByFilter.
@@ -1382,6 +1464,29 @@ export interface NodeSizesRequest {
   // Ignored when project_id is "all" and organization_id is not provided.
   // boolean
   include_restricted?: boolean;
+}
+
+// Define the Notification details
+export interface Notification {
+  // String representation of the Notification
+  // string
+  notification?: string;
+  
+  // Notification Severity
+  // NotificationSeverity
+  severity?: NotificationSeverity;
+  
+  // The timestamp of when the notification has been created.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification has been updated.
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
 }
 
 // RebalanceDeploymentShardsRequest request for rebalancing shards for a deployment
@@ -1541,6 +1646,18 @@ export interface VersionList {
   items?: Version[];
 }
 
+// NotificationSeverity keeps possible severities for notifications
+export enum NotificationSeverity {
+  // Defines Info level Notification Severity
+  NOTIFICATION_SEVERITY_INFO = 0,
+  
+  // Defines Warning level Notification Severity
+  NOTIFICATION_SEVERITY_WARNING = 1,
+  
+  // Defines Critical level Notification Severity
+  NOTIFICATION_SEVERITY_CRITICAL = 2,
+}
+
 // DataService is the API used to configure data objects.
 export interface IDataService {
   // Get the current API version of this service.
@@ -1632,6 +1749,7 @@ export interface IDataService {
   // If project ID "all" is used, then all node sizes for the region with given
   // ID are returned.
   // Required permissions:
+  // - data.nodesize.list on the requested deployment (if deployment ID is set)
   // - data.nodesize.list on the requested project (if project ID does not equal "all")
   // - data.nodesize.list on the requested organization (if organization ID is set)
   // - None if project ID does equals "all"
@@ -1646,6 +1764,11 @@ export interface IDataService {
   // Required permissions:
   // - data.cpusize.list on the requested project
   ListCPUSizes: (req: ListCPUSizesRequest) => Promise<CPUSizeList>;
+  
+  // Get the deployment model identified by the provided ID.
+  // Required permissions:
+  // - None (authenticated only)
+  GetDeploymentModel: (req: arangodb_cloud_common_v1_IDOptions) => Promise<DeploymentModel>;
   
   // Calculate the total size of a deployment with given arguments.
   // Required permissions:
@@ -1864,6 +1987,7 @@ export class DataService implements IDataService {
   // If project ID "all" is used, then all node sizes for the region with given
   // ID are returned.
   // Required permissions:
+  // - data.nodesize.list on the requested deployment (if deployment ID is set)
   // - data.nodesize.list on the requested project (if project ID does not equal "all")
   // - data.nodesize.list on the requested organization (if organization ID is set)
   // - None if project ID does equals "all"
@@ -1888,6 +2012,15 @@ export class DataService implements IDataService {
   async ListCPUSizes(req: ListCPUSizesRequest): Promise<CPUSizeList> {
     const path = `/api/data/v1/projects/${encodeURIComponent(req.project_id || '')}/cpusizes`;
     const url = path + api.queryString(req, [`project_id`]);
+    return api.get(url, undefined);
+  }
+  
+  // Get the deployment model identified by the provided ID.
+  // Required permissions:
+  // - None (authenticated only)
+  async GetDeploymentModel(req: arangodb_cloud_common_v1_IDOptions): Promise<DeploymentModel> {
+    const path = `/api/data/v1/deploymentmodel/${encodeURIComponent(req.id || '')}`;
+    const url = path + api.queryString(req, [`id`]);
     return api.get(url, undefined);
   }
   

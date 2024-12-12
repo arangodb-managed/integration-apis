@@ -170,6 +170,10 @@ export interface NotebookModel {
   // 1 GPU unit equals 1 physical / virtual GPU.
   // number
   gpu?: number;
+  
+  // Initial amount of disk space (in GiB) available to the notebook.
+  // number
+  initial_disk_size?: number;
 }
 
 // List of notebook models.
@@ -203,6 +207,17 @@ export interface Status {
   // This value will be empty during the creation of the notebook.
   // string
   endpoint?: string;
+  
+  // Endpoint URL used to reach the notebook on default port 443
+  // This value will be empty during the creation of the notebook.
+  // This endpoint is recommended for human-to-notebook connections.
+  // string
+  endpoint_default?: string;
+  
+  // Endpoint URL used to reach the notebook with self signed certificate on port 18829
+  // This value will be empty during the creation of the notebook.
+  // string
+  endpoint_self_signed?: string;
   
   // The timestamp of when this notebook was last reported to be active.
   // googleTypes.Timestamp
