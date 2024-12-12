@@ -1,5 +1,0 @@
----
-page-toc:
-  disable: true
-title: "ArangoGraph Insights Platform API"
----
