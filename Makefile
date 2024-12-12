@@ -1,10 +1,10 @@
 SHELL = bash
 SCRIPTDIR := $(shell pwd)
 ROOTDIR := $(shell cd $(SCRIPTDIR) && pwd)
-INTPROTOSOURCES := $(shell find . -name '*.proto' -not -path './vendor/*' -not -path './bin/protobuf/*' -not -path './bin/generated-protobuf/*' -not -path './bin/include/*')
-PUBPROTOSOURCES := $(shell find vendor/github.com/arangodb-managed/apis -name '*.proto' -not -path './bin/include/*')
+INTPROTOSOURCES := $(shell find . -name '*.proto' -not -path './vendor/*' -not -path './vendor-proto/*' -not -path './bin/protobuf/*' -not -path './bin/generated-protobuf/*' -not -path './bin/include/*')
+PUBPROTOSOURCES := $(shell find vendor-proto/ -name '*.proto' -not -path './bin/include/*' -not -path 'vendor-proto/vendor-proto/*')
 TARGETINTPROTOSOURCES := $(INTPROTOSOURCES:%=bin/protobuf/%)
-TARGETPUBPROTOSOURCES := $(PUBPROTOSOURCES:vendor/github.com/arangodb-managed/apis/%=bin/protobuf/%)
+TARGETPUBPROTOSOURCES := $(PUBPROTOSOURCES:vendor-proto/%=bin/protobuf/%)
 BUILDIMAGE := arangodboasis/golang-ci:latest
 CACHEVOL := arangodb-cloud-integration-apis-gocache
 MODVOL := arangodb-cloud-integration-apis-pkg-mod
@@ -18,7 +18,6 @@ endif
 
 DOCKERARGS := run -t --rm \
 	-u $(shell id -u):$(shell id -g) \
-	-v $(ROOTDIR)/vendor:/go/src \
 	-v $(ROOTDIR):/usr/src \
 	-v $(CACHEVOL):/usr/gocache \
 	-v $(MODVOL):/go/pkg/mod \
@@ -105,14 +104,13 @@ check:
 .PHONY: docs
 docs: $(CACHEVOL) $(MODVOL) $(HOMEVOL)
 	$(DOCKERENV) \
-		protoc -I.:vendor:vendor/googleapis/:vendor/github.com/gogo/protobuf/protobuf/ \
-		    -I.:vendor/github.com/arangodb-managed/apis/ \
+		protoc -I.:vendor-proto:vendor-proto/vendor-proto/ \
 			--doc_out=docs $(INTPROTOSOURCES) \
 			--doc_opt=html,index-raw.html
 	cat docs/header.txt docs/index-raw.html > docs/index.html
 	rm docs/index-raw.html
 
-bin/protobuf/%: vendor/github.com/arangodb-managed/apis/%
+bin/protobuf/%: vendor-proto/%
 	@mkdir -p $(shell dirname $@)
 	@cp -af $< $@
 
@@ -129,7 +127,7 @@ ts: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@rm -Rf typescript
 	@mkdir -p typescript
 	$(DOCKERENV) \
-		sh -c "cd bin/protobuf ; protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf --ts_out=../../typescript $(LOCTSPROTOSOURCES) --ts_opt=. "
+		sh -c "cd bin/protobuf ; protoc -I.:../../vendor-proto:../../vendor-proto/vendor-proto/ --ts_out=../../typescript $(LOCTSPROTOSOURCES) --ts_opt=. "
 
 
 PYPROTOSOURCES := $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
@@ -141,7 +139,7 @@ python: $(PROTOC) $(TARGETINTPROTOSOURCES) $(TARGETPUBPROTOSOURCES)
 	@rm -Rf python
 	@mkdir -p python
 	$(DOCKERENV) \
-		sh -c "cd bin/protobuf ; pip3 install --user grpcio-tools ; python3 -m grpc_tools.protoc -I.:../../vendor:../../vendor/googleapis/:../../vendor/github.com/gogo/protobuf/protobuf:../../vendor/github.com/arangodb-managed/apis/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
+		sh -c "cd bin/protobuf ; pip3 install --user grpcio-tools ; python3 -m grpc_tools.protoc -I.:../../vendor-proto:../../vendor-proto/vendor-proto/ --python_out=../../python --pyi_out=../../python --grpc_python_out=../../python $(LOCPYPROTOSOURCES)"
 
 .PHONY: test
 test:
@@ -158,15 +156,16 @@ update-modules:
 	go mod edit \
 		$(shell zutano go mod replacements)
 	go get \
-		github.com/arangodb-managed/apis@$(APISVERSION) 
-	mkdir -p vendor/github.com/arangodb-managed
-	rm -Rf vendor/github.com/arangodb-managed/apis/ vendor/googleapis vendor/github.com/gogo
-	git clone --branch $(APISVERSION) git@github.com:arangodb-managed/apis.git vendor/github.com/arangodb-managed/apis
-	cp -r vendor/github.com/arangodb-managed/apis/vendor/googleapis vendor/
-	cp -r vendor/github.com/arangodb-managed/apis/vendor/github.com/gogo vendor/github.com/
-	rm -Rf vendor/github.com/arangodb-managed/apis/.git vendor/github.com/arangodb-managed/apis/vendor
+		github.com/arangodb-managed/apis@$(APISVERSION)
 	go mod tidy -v
 	go mod download
+
+	# manually clone the apis repo for .proto files
+	rm -Rf vendor-proto
+	git clone --branch $(APISVERSION) git@github.com:arangodb-managed/apis.git vendor-proto
+	rm -Rf vendor-proto/vendor
+	find vendor-proto/ -type f ! -name "*.proto" -delete
+	find vendor-proto/ -type d -empty -delete
 
 bootstrap:
 	go get github.com/arangodb-managed/zutano
