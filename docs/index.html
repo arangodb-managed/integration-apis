@@ -331,6 +331,7 @@ title: "ArangoGraph Insights Platform Integration API"
                 <td><a href="#arangodb.cloud.common.v1.IDOptions">.arangodb.cloud.common.v1.IDOptions</a></td>
                 <td><a href="#arangodb.cloud.data.v1.DeploymentCredentials">.arangodb.cloud.data.v1.DeploymentCredentials</a></td>
                 <td><p>Fetch the credentials for the root user of the deployment with given ID.
+When the integration sidecar is running in the context of a single deployment, the provided ID is optional, however if provided it should match.
 Required permissions:
 - dataservice.deployment.get-root-credentials for the deployment.</p></td>
               </tr>

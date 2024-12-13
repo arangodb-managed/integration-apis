@@ -1,6 +1,5 @@
 from common.v1 import common_pb2 as _common_pb2
-from iam.v1 import iam_pb2 as _iam_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -10,7 +9,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class UserName(_message.Message):
-    __slots__ = ["formatted", "givenName", "familyName"]
+    __slots__ = ("formatted", "givenName", "familyName")
     FORMATTED_FIELD_NUMBER: _ClassVar[int]
     GIVENNAME_FIELD_NUMBER: _ClassVar[int]
     FAMILYNAME_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +19,7 @@ class UserName(_message.Message):
     def __init__(self, formatted: _Optional[str] = ..., givenName: _Optional[str] = ..., familyName: _Optional[str] = ...) -> None: ...
 
 class UserResource(_message.Message):
-    __slots__ = ["value", "primary", "type"]
+    __slots__ = ("value", "primary", "type")
     VALUE_FIELD_NUMBER: _ClassVar[int]
     PRIMARY_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
@@ -30,7 +29,7 @@ class UserResource(_message.Message):
     def __init__(self, value: _Optional[str] = ..., primary: bool = ..., type: _Optional[str] = ...) -> None: ...
 
 class Metadata(_message.Message):
-    __slots__ = ["resourceType", "created", "lastModified"]
+    __slots__ = ("resourceType", "created", "lastModified")
     RESOURCETYPE_FIELD_NUMBER: _ClassVar[int]
     CREATED_FIELD_NUMBER: _ClassVar[int]
     LASTMODIFIED_FIELD_NUMBER: _ClassVar[int]
@@ -40,7 +39,7 @@ class Metadata(_message.Message):
     def __init__(self, resourceType: _Optional[str] = ..., created: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., lastModified: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class User(_message.Message):
-    __slots__ = ["schemas", "id", "displayName", "nickName", "locale", "name", "emails", "photos", "meta", "externalId", "active", "userName"]
+    __slots__ = ("schemas", "id", "displayName", "nickName", "locale", "name", "emails", "photos", "meta", "externalId", "active", "userName")
     SCHEMAS_FIELD_NUMBER: _ClassVar[int]
     ID_FIELD_NUMBER: _ClassVar[int]
     DISPLAYNAME_FIELD_NUMBER: _ClassVar[int]
@@ -68,7 +67,7 @@ class User(_message.Message):
     def __init__(self, schemas: _Optional[_Iterable[str]] = ..., id: _Optional[str] = ..., displayName: _Optional[str] = ..., nickName: _Optional[str] = ..., locale: _Optional[str] = ..., name: _Optional[_Union[UserName, _Mapping]] = ..., emails: _Optional[_Iterable[_Union[UserResource, _Mapping]]] = ..., photos: _Optional[_Iterable[_Union[UserResource, _Mapping]]] = ..., meta: _Optional[_Union[Metadata, _Mapping]] = ..., externalId: _Optional[str] = ..., active: bool = ..., userName: _Optional[str] = ...) -> None: ...
 
 class ListUsersRequest(_message.Message):
-    __slots__ = ["startIndex", "count", "filter"]
+    __slots__ = ("startIndex", "count", "filter")
     STARTINDEX_FIELD_NUMBER: _ClassVar[int]
     COUNT_FIELD_NUMBER: _ClassVar[int]
     FILTER_FIELD_NUMBER: _ClassVar[int]
@@ -78,7 +77,7 @@ class ListUsersRequest(_message.Message):
     def __init__(self, startIndex: _Optional[int] = ..., count: _Optional[int] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListUserResponse(_message.Message):
-    __slots__ = ["schemas", "totalResult", "startIndex", "count", "Resources"]
+    __slots__ = ("schemas", "totalResult", "startIndex", "count", "Resources")
     SCHEMAS_FIELD_NUMBER: _ClassVar[int]
     TOTALRESULT_FIELD_NUMBER: _ClassVar[int]
     STARTINDEX_FIELD_NUMBER: _ClassVar[int]

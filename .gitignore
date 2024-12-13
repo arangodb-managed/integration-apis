@@ -9,3 +9,4 @@
 go.mod.orig
 go.sum.orig
 
+.DS_Store

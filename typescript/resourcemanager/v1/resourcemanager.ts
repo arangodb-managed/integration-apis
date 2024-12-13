@@ -96,7 +96,7 @@ export interface Event {
   // The fields used in the payload are specific
   // to the type of event.
   // Event_PayloadEntry
-  payload?: Event_PayloadEntry[];
+  payload?: { [key: string]: string };
   
   // The creation timestamp of the event
   // googleTypes.Timestamp
@@ -126,6 +126,13 @@ export interface Event {
   // This is a read-only value.
   // boolean
   status_only?: boolean;
+  
+  // The application/tool which created this event.
+  // This information is collected by inspecting headers:
+  // First the x-arango-graph-user-agent will be tried, if this isn't set, the first service name from oasis-trace will be used, otherwise an empty string.
+  // This is a read-only value that can be empty.
+  // string
+  created_with?: string;
 }
 export interface Event_PayloadEntry {
   // string
@@ -223,6 +230,29 @@ export interface MemberList {
   items?: Member[];
 }
 
+// Define the Notification details
+export interface Notification {
+  // String representation of the Notification
+  // string
+  notification?: string;
+  
+  // Notification Severity
+  // NotificationSeverity
+  severity?: NotificationSeverity;
+  
+  // The timestamp of when the notification has been created.
+  // googleTypes.Timestamp
+  created_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification has been updated.
+  // googleTypes.Timestamp
+  updated_at?: googleTypes.Timestamp;
+  
+  // The timestamp of when the notification expires.
+  // googleTypes.Timestamp
+  expires_at?: googleTypes.Timestamp;
+}
+
 // An Organization is represents a real world organization such as a company.
 export interface Organization {
   // System identifier of the organization.
@@ -266,7 +296,7 @@ export interface Organization {
   // map: tier-id -> count
   // This is a read-only value.
   // Organization_TotalDeploymentsEntry
-  total_deployments?: Organization_TotalDeploymentsEntry[];
+  total_deployments?: { [key: string]: number };
   
   // If set, all projects in this organization are allowed to use deployments using the flexible model.
   // This is a read-only value.
@@ -307,6 +337,17 @@ export interface Organization {
   // This is a read-only value.
   // boolean
   is_allowed_to_use_scim?: boolean;
+  
+  // Defines notifications attached to the Organization
+  // Organization_NotificationsEntry
+  notifications?: { [key: string]: Notification };
+}
+export interface Organization_NotificationsEntry {
+  // string
+  key?: string;
+  
+  // Notification
+  value?: Notification;
 }
 export interface Organization_TotalDeploymentsEntry {
   // string
@@ -595,6 +636,18 @@ export interface Tier {
   // This is a read-only value and cannot be initialized.
   // boolean
   has_multi_region_backup_uploads?: boolean;
+}
+
+// NotificationSeverity keeps possible severities for notifications
+export enum NotificationSeverity {
+  // Defines Info level Notification Severity
+  NOTIFICATION_SEVERITY_INFO = 0,
+  
+  // Defines Warning level Notification Severity
+  NOTIFICATION_SEVERITY_WARNING = 1,
+  
+  // Defines Critical level Notification Severity
+  NOTIFICATION_SEVERITY_CRITICAL = 2,
 }
 
 // ResourceManagerService is the API used to configure basic resource objects.

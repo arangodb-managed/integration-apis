@@ -10,7 +10,7 @@ DEFAULT_PROFILE_FIELD_NUMBER: _ClassVar[int]
 default_profile: _descriptor.FieldDescriptor
 
 class MethodProfile(_message.Message):
-    __slots__ = ["timeout", "retryable"]
+    __slots__ = ("timeout", "retryable")
     TIMEOUT_FIELD_NUMBER: _ClassVar[int]
     RETRYABLE_FIELD_NUMBER: _ClassVar[int]
     timeout: int
@@ -18,7 +18,7 @@ class MethodProfile(_message.Message):
     def __init__(self, timeout: _Optional[int] = ..., retryable: bool = ...) -> None: ...
 
 class ServiceProfile(_message.Message):
-    __slots__ = ["timeout"]
+    __slots__ = ("timeout",)
     TIMEOUT_FIELD_NUMBER: _ClassVar[int]
     timeout: int
     def __init__(self, timeout: _Optional[int] = ...) -> None: ...

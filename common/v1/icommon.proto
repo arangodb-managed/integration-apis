@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,8 +23,6 @@ syntax = "proto3";
 package arangodb.cloud.integration.common.v1;
 
 option go_package = "github.com/arangodb-managed/integration-apis/common/v1";
-
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 
 // KeyValuePair specifies a key-value pair.
 message KeyValuePair {

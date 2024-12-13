@@ -1,6 +1,6 @@
 from common.v1 import common_pb2 as _common_pb2
-from github.com.golang.protobuf.ptypes.duration import duration_pb2 as _duration_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import duration_pb2 as _duration_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CACertificate(_message.Message):
-    __slots__ = ["id", "url", "name", "description", "project_id", "lifetime", "created_at", "deleted_at", "expires_at", "certificate_pem", "is_deleted", "is_expired", "will_expire_soon", "is_default", "use_well_known_certificate", "locked", "rotation_needed", "cloned_from_id"]
+    __slots__ = ("id", "url", "name", "description", "project_id", "lifetime", "created_at", "deleted_at", "expires_at", "certificate_pem", "is_deleted", "is_expired", "will_expire_soon", "is_default", "use_well_known_certificate", "locked", "rotation_needed", "cloned_from_id")
     ID_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
@@ -50,13 +50,13 @@ class CACertificate(_message.Message):
     def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., lifetime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., certificate_pem: _Optional[str] = ..., is_deleted: bool = ..., is_expired: bool = ..., will_expire_soon: bool = ..., is_default: bool = ..., use_well_known_certificate: bool = ..., locked: bool = ..., rotation_needed: bool = ..., cloned_from_id: _Optional[str] = ...) -> None: ...
 
 class CACertificateList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[CACertificate]
     def __init__(self, items: _Optional[_Iterable[_Union[CACertificate, _Mapping]]] = ...) -> None: ...
 
 class ListCACertificatesRequest(_message.Message):
-    __slots__ = ["options", "project_id", "cloned_from_id"]
+    __slots__ = ("options", "project_id", "cloned_from_id")
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     CLONED_FROM_ID_FIELD_NUMBER: _ClassVar[int]
@@ -66,9 +66,9 @@ class ListCACertificatesRequest(_message.Message):
     def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., project_id: _Optional[str] = ..., cloned_from_id: _Optional[str] = ...) -> None: ...
 
 class CACertificateInstructions(_message.Message):
-    __slots__ = ["platforms"]
+    __slots__ = ("platforms",)
     class PlatformInstructions(_message.Message):
-        __slots__ = ["platform", "install_steps", "uninstall_steps"]
+        __slots__ = ("platform", "install_steps", "uninstall_steps")
         PLATFORM_FIELD_NUMBER: _ClassVar[int]
         INSTALL_STEPS_FIELD_NUMBER: _ClassVar[int]
         UNINSTALL_STEPS_FIELD_NUMBER: _ClassVar[int]

@@ -1,7 +1,7 @@
 //
 // DISCLAIMER
 //
-// Copyright 2023 ArangoDB GmbH, Cologne, Germany
+// Copyright 2023-2024 ArangoDB GmbH, Cologne, Germany
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,10 +25,7 @@ package arangodb.cloud.integration.bucketservice.v1;
 option go_package = "github.com/arangodb-managed/integration-apis/bucket-service/v1";
 
 import "common/v1/common.proto";
-import "common/v1/icommon.proto";
 import "data/v1/data.proto";
-
-import "github.com/golang/protobuf/ptypes/timestamp/timestamp.proto";
 
 // DataService is the API used to manage deployments.
 service DataService {

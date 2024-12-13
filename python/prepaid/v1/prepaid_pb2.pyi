@@ -1,6 +1,6 @@
 from common.v1 import common_pb2 as _common_pb2
 from data.v1 import data_pb2 as _data_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -10,9 +10,9 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class PrepaidDeployment(_message.Message):
-    __slots__ = ["id", "url", "name", "description", "organization_id", "region_id", "created_at", "deleted_at", "is_deleted", "starts_at", "ends_at", "is_active", "support_plan_id", "model", "addons", "disk_performance_id", "status"]
+    __slots__ = ("id", "url", "name", "description", "organization_id", "region_id", "created_at", "deleted_at", "is_deleted", "starts_at", "ends_at", "is_active", "support_plan_id", "model", "addons", "disk_performance_id", "status")
     class Status(_message.Message):
-        __slots__ = ["deployment_id", "attached_at", "detached_at", "deployment_url", "last_warning_email_send_at"]
+        __slots__ = ("deployment_id", "attached_at", "detached_at", "deployment_url", "last_warning_email_send_at")
         DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
         ATTACHED_AT_FIELD_NUMBER: _ClassVar[int]
         DETACHED_AT_FIELD_NUMBER: _ClassVar[int]
@@ -61,13 +61,13 @@ class PrepaidDeployment(_message.Message):
     def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., organization_id: _Optional[str] = ..., region_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_active: bool = ..., support_plan_id: _Optional[str] = ..., model: _Optional[_Union[_data_pb2.Deployment.ModelSpec, _Mapping]] = ..., addons: _Optional[_Iterable[str]] = ..., disk_performance_id: _Optional[str] = ..., status: _Optional[_Union[PrepaidDeployment.Status, _Mapping]] = ...) -> None: ...
 
 class PrepaidDeploymentList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[PrepaidDeployment]
     def __init__(self, items: _Optional[_Iterable[_Union[PrepaidDeployment, _Mapping]]] = ...) -> None: ...
 
 class ListPrepaidDeploymentsRequest(_message.Message):
-    __slots__ = ["organization_id", "options"]
+    __slots__ = ("organization_id", "options")
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
     organization_id: str
@@ -75,13 +75,13 @@ class ListPrepaidDeploymentsRequest(_message.Message):
     def __init__(self, organization_id: _Optional[str] = ..., options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ...) -> None: ...
 
 class UpdateDeploymentRequest(_message.Message):
-    __slots__ = ["prepaid_deployment_id"]
+    __slots__ = ("prepaid_deployment_id",)
     PREPAID_DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     prepaid_deployment_id: str
     def __init__(self, prepaid_deployment_id: _Optional[str] = ...) -> None: ...
 
 class CloneFromBackupRequest(_message.Message):
-    __slots__ = ["prepaid_deployment_id", "backup_id"]
+    __slots__ = ("prepaid_deployment_id", "backup_id")
     PREPAID_DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     BACKUP_ID_FIELD_NUMBER: _ClassVar[int]
     prepaid_deployment_id: str
@@ -89,9 +89,9 @@ class CloneFromBackupRequest(_message.Message):
     def __init__(self, prepaid_deployment_id: _Optional[str] = ..., backup_id: _Optional[str] = ...) -> None: ...
 
 class CreateDeploymentRequest(_message.Message):
-    __slots__ = ["prepaid_deployment_id", "project_id", "ipallowlist_id", "version", "certificates", "accepted_terms_and_conditions_id", "is_platform_authentication_enabled"]
+    __slots__ = ("prepaid_deployment_id", "project_id", "ipallowlist_id", "version", "certificates", "accepted_terms_and_conditions_id", "is_platform_authentication_enabled")
     class CertificateSpec(_message.Message):
-        __slots__ = ["ca_certificate_id", "alternate_dns_names"]
+        __slots__ = ("ca_certificate_id", "alternate_dns_names")
         CA_CERTIFICATE_ID_FIELD_NUMBER: _ClassVar[int]
         ALTERNATE_DNS_NAMES_FIELD_NUMBER: _ClassVar[int]
         ca_certificate_id: str

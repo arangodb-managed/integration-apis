@@ -1,16 +1,26 @@
 from common.v1 import common_pb2 as _common_pb2
-from github.com.golang.protobuf.ptypes.timestamp import timestamp_pb2 as _timestamp_pb2
-from github.com.golang.protobuf.ptypes.duration import duration_pb2 as _duration_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import duration_pb2 as _duration_pb2
 from google.api import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class NotificationSeverity(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    NOTIFICATION_SEVERITY_INFO: _ClassVar[NotificationSeverity]
+    NOTIFICATION_SEVERITY_WARNING: _ClassVar[NotificationSeverity]
+    NOTIFICATION_SEVERITY_CRITICAL: _ClassVar[NotificationSeverity]
+NOTIFICATION_SEVERITY_INFO: NotificationSeverity
+NOTIFICATION_SEVERITY_WARNING: NotificationSeverity
+NOTIFICATION_SEVERITY_CRITICAL: NotificationSeverity
+
 class RotateDeploymentServerRequest(_message.Message):
-    __slots__ = ["deployment_id", "server_id"]
+    __slots__ = ("deployment_id", "server_id")
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     SERVER_ID_FIELD_NUMBER: _ClassVar[int]
     deployment_id: str
@@ -18,7 +28,7 @@ class RotateDeploymentServerRequest(_message.Message):
     def __init__(self, deployment_id: _Optional[str] = ..., server_id: _Optional[str] = ...) -> None: ...
 
 class CreateTestDatabaseResponse(_message.Message):
-    __slots__ = ["db_name", "username", "password", "hostname", "port"]
+    __slots__ = ("db_name", "username", "password", "hostname", "port")
     DB_NAME_FIELD_NUMBER: _ClassVar[int]
     USERNAME_FIELD_NUMBER: _ClassVar[int]
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
@@ -32,28 +42,28 @@ class CreateTestDatabaseResponse(_message.Message):
     def __init__(self, db_name: _Optional[str] = ..., username: _Optional[str] = ..., password: _Optional[str] = ..., hostname: _Optional[str] = ..., port: _Optional[str] = ...) -> None: ...
 
 class CreateTestDatabaseRequest(_message.Message):
-    __slots__ = ["deployment_id"]
+    __slots__ = ("deployment_id",)
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     deployment_id: str
     def __init__(self, deployment_id: _Optional[str] = ...) -> None: ...
 
 class RebalanceDeploymentShardsRequest(_message.Message):
-    __slots__ = ["deployment_id"]
+    __slots__ = ("deployment_id",)
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     deployment_id: str
     def __init__(self, deployment_id: _Optional[str] = ...) -> None: ...
 
 class Deployment(_message.Message):
-    __slots__ = ["id", "url", "name", "description", "project_id", "region_id", "created_at", "deleted_at", "is_deleted", "support_plan_id", "created_by_id", "accepted_terms_and_conditions_id", "locked", "is_paused", "last_paused_at", "last_resumed_at", "prepaid_deployment_id", "disable_foxx_authentication", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at", "is_prepaid_deployment_update_available", "private_endpoint", "version", "replace_version_by", "upgrade_recommendation", "version_is_end_of_life", "certificates", "servers", "ipallowlist_id", "model", "custom_image", "iamprovider_id", "disk_performance_id", "disk_performance_locked", "disk_rate_limit_period", "last_disk_performance_updated_at", "last_disk_size_updated_at", "disk_rate_limit_active", "status", "size", "expiration", "backup_restore", "deployment_recommendations", "is_clone", "clone_backup_id", "notification_settings", "disk_auto_size_settings", "is_scheduled_root_password_rotation_enabled", "last_root_password_rotated_at", "deployment_profile_id", "is_platform_authentication_enabled", "intended_use_case"]
+    __slots__ = ("id", "url", "name", "description", "project_id", "region_id", "created_at", "deleted_at", "is_deleted", "support_plan_id", "created_by_id", "accepted_terms_and_conditions_id", "locked", "is_paused", "last_paused_at", "last_resumed_at", "prepaid_deployment_id", "disable_foxx_authentication", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at", "is_prepaid_deployment_update_available", "private_endpoint", "version", "replace_version_by", "upgrade_recommendation", "version_is_end_of_life", "certificates", "servers", "ipallowlist_id", "model", "custom_image", "iamprovider_id", "disk_performance_id", "disk_performance_locked", "disk_rate_limit_period", "last_disk_performance_updated_at", "last_disk_size_updated_at", "disk_rate_limit_active", "status", "size", "expiration", "backup_restore", "deployment_recommendations", "is_clone", "clone_backup_id", "notification_settings", "disk_auto_size_settings", "is_scheduled_root_password_rotation_enabled", "last_root_password_rotated_at", "deployment_profile_id", "is_platform_authentication_enabled", "intended_use_case", "drop_vst_support", "notifications")
     class CertificateSpec(_message.Message):
-        __slots__ = ["ca_certificate_id", "alternate_dns_names"]
+        __slots__ = ("ca_certificate_id", "alternate_dns_names")
         CA_CERTIFICATE_ID_FIELD_NUMBER: _ClassVar[int]
         ALTERNATE_DNS_NAMES_FIELD_NUMBER: _ClassVar[int]
         ca_certificate_id: str
         alternate_dns_names: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, ca_certificate_id: _Optional[str] = ..., alternate_dns_names: _Optional[_Iterable[str]] = ...) -> None: ...
     class ServersSpec(_message.Message):
-        __slots__ = ["coordinators", "coordinator_memory_size", "coordinator_args", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "dbserver_args", "minimum_dbservers_count"]
+        __slots__ = ("coordinators", "coordinator_memory_size", "coordinator_args", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "dbserver_args", "minimum_dbservers_count", "minimum_dbserver_disk_size")
         COORDINATORS_FIELD_NUMBER: _ClassVar[int]
         COORDINATOR_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         COORDINATOR_ARGS_FIELD_NUMBER: _ClassVar[int]
@@ -62,6 +72,7 @@ class Deployment(_message.Message):
         DBSERVER_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
         DBSERVER_ARGS_FIELD_NUMBER: _ClassVar[int]
         MINIMUM_DBSERVERS_COUNT_FIELD_NUMBER: _ClassVar[int]
+        MINIMUM_DBSERVER_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
         coordinators: int
         coordinator_memory_size: int
         coordinator_args: _containers.RepeatedScalarFieldContainer[str]
@@ -70,9 +81,10 @@ class Deployment(_message.Message):
         dbserver_disk_size: int
         dbserver_args: _containers.RepeatedScalarFieldContainer[str]
         minimum_dbservers_count: int
-        def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., coordinator_args: _Optional[_Iterable[str]] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., dbserver_args: _Optional[_Iterable[str]] = ..., minimum_dbservers_count: _Optional[int] = ...) -> None: ...
+        minimum_dbserver_disk_size: int
+        def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., coordinator_args: _Optional[_Iterable[str]] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., dbserver_args: _Optional[_Iterable[str]] = ..., minimum_dbservers_count: _Optional[int] = ..., minimum_dbserver_disk_size: _Optional[int] = ...) -> None: ...
     class ModelSpec(_message.Message):
-        __slots__ = ["model", "node_size_id", "node_count", "node_disk_size"]
+        __slots__ = ("model", "node_size_id", "node_count", "node_disk_size")
         MODEL_FIELD_NUMBER: _ClassVar[int]
         NODE_SIZE_ID_FIELD_NUMBER: _ClassVar[int]
         NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
@@ -83,7 +95,7 @@ class Deployment(_message.Message):
         node_disk_size: int
         def __init__(self, model: _Optional[str] = ..., node_size_id: _Optional[str] = ..., node_count: _Optional[int] = ..., node_disk_size: _Optional[int] = ...) -> None: ...
     class ServerStatus(_message.Message):
-        __slots__ = ["id", "type", "description", "created_at", "ready", "member_of_cluster", "failed", "creating", "ok", "bad", "upgrading", "version", "last_started_at", "rotation_pending", "can_be_deleted", "is_leader", "data_volume_info", "recent_restarts", "last_memory_usage", "last_cpu_usage", "last_memory_limit", "last_cpu_limit"]
+        __slots__ = ("id", "type", "description", "created_at", "ready", "member_of_cluster", "failed", "creating", "ok", "bad", "upgrading", "version", "last_started_at", "rotation_pending", "can_be_deleted", "is_leader", "data_volume_info", "recent_restarts", "last_memory_usage", "last_cpu_usage", "last_memory_limit", "last_cpu_limit")
         ID_FIELD_NUMBER: _ClassVar[int]
         TYPE_FIELD_NUMBER: _ClassVar[int]
         DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
@@ -130,7 +142,7 @@ class Deployment(_message.Message):
         last_cpu_limit: float
         def __init__(self, id: _Optional[str] = ..., type: _Optional[str] = ..., description: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ready: bool = ..., member_of_cluster: bool = ..., failed: bool = ..., creating: bool = ..., ok: bool = ..., bad: bool = ..., upgrading: bool = ..., version: _Optional[str] = ..., last_started_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., rotation_pending: bool = ..., can_be_deleted: bool = ..., is_leader: bool = ..., data_volume_info: _Optional[_Union[DataVolumeInfo, _Mapping]] = ..., recent_restarts: _Optional[int] = ..., last_memory_usage: _Optional[int] = ..., last_cpu_usage: _Optional[float] = ..., last_memory_limit: _Optional[int] = ..., last_cpu_limit: _Optional[float] = ...) -> None: ...
     class Status(_message.Message):
-        __slots__ = ["endpoint", "description", "created", "ready", "upgrading", "server_versions", "servers", "bootstrapped_at", "bootstrapped", "endpoint_self_signed", "private_endpoint", "private_endpoint_only", "endpoint_private_endpoint", "endpoint_private_endpoint_self_signed", "backup_restore_status", "total_backup_size_bytes", "backup_upload_in_progress", "is_up_to_date"]
+        __slots__ = ("endpoint", "description", "created", "ready", "upgrading", "server_versions", "servers", "bootstrapped_at", "bootstrapped", "endpoint_self_signed", "endpoint_default", "private_endpoint", "private_endpoint_only", "endpoint_private_endpoint", "endpoint_private_endpoint_self_signed", "endpoint_private_endpoint_default", "backup_restore_status", "total_backup_size_bytes", "backup_upload_in_progress", "is_up_to_date", "read_only")
         ENDPOINT_FIELD_NUMBER: _ClassVar[int]
         DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
         CREATED_FIELD_NUMBER: _ClassVar[int]
@@ -141,14 +153,17 @@ class Deployment(_message.Message):
         BOOTSTRAPPED_AT_FIELD_NUMBER: _ClassVar[int]
         BOOTSTRAPPED_FIELD_NUMBER: _ClassVar[int]
         ENDPOINT_SELF_SIGNED_FIELD_NUMBER: _ClassVar[int]
+        ENDPOINT_DEFAULT_FIELD_NUMBER: _ClassVar[int]
         PRIVATE_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
         PRIVATE_ENDPOINT_ONLY_FIELD_NUMBER: _ClassVar[int]
         ENDPOINT_PRIVATE_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
         ENDPOINT_PRIVATE_ENDPOINT_SELF_SIGNED_FIELD_NUMBER: _ClassVar[int]
+        ENDPOINT_PRIVATE_ENDPOINT_DEFAULT_FIELD_NUMBER: _ClassVar[int]
         BACKUP_RESTORE_STATUS_FIELD_NUMBER: _ClassVar[int]
         TOTAL_BACKUP_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
         BACKUP_UPLOAD_IN_PROGRESS_FIELD_NUMBER: _ClassVar[int]
         IS_UP_TO_DATE_FIELD_NUMBER: _ClassVar[int]
+        READ_ONLY_FIELD_NUMBER: _ClassVar[int]
         endpoint: str
         description: str
         created: bool
@@ -159,17 +174,20 @@ class Deployment(_message.Message):
         bootstrapped_at: _timestamp_pb2.Timestamp
         bootstrapped: bool
         endpoint_self_signed: str
+        endpoint_default: str
         private_endpoint: bool
         private_endpoint_only: bool
         endpoint_private_endpoint: str
         endpoint_private_endpoint_self_signed: str
+        endpoint_private_endpoint_default: str
         backup_restore_status: Deployment.BackupRestoreStatus
         total_backup_size_bytes: int
         backup_upload_in_progress: bool
         is_up_to_date: bool
-        def __init__(self, endpoint: _Optional[str] = ..., description: _Optional[str] = ..., created: bool = ..., ready: bool = ..., upgrading: bool = ..., server_versions: _Optional[_Iterable[str]] = ..., servers: _Optional[_Iterable[_Union[Deployment.ServerStatus, _Mapping]]] = ..., bootstrapped_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., bootstrapped: bool = ..., endpoint_self_signed: _Optional[str] = ..., private_endpoint: bool = ..., private_endpoint_only: bool = ..., endpoint_private_endpoint: _Optional[str] = ..., endpoint_private_endpoint_self_signed: _Optional[str] = ..., backup_restore_status: _Optional[_Union[Deployment.BackupRestoreStatus, _Mapping]] = ..., total_backup_size_bytes: _Optional[int] = ..., backup_upload_in_progress: bool = ..., is_up_to_date: bool = ...) -> None: ...
+        read_only: bool
+        def __init__(self, endpoint: _Optional[str] = ..., description: _Optional[str] = ..., created: bool = ..., ready: bool = ..., upgrading: bool = ..., server_versions: _Optional[_Iterable[str]] = ..., servers: _Optional[_Iterable[_Union[Deployment.ServerStatus, _Mapping]]] = ..., bootstrapped_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., bootstrapped: bool = ..., endpoint_self_signed: _Optional[str] = ..., endpoint_default: _Optional[str] = ..., private_endpoint: bool = ..., private_endpoint_only: bool = ..., endpoint_private_endpoint: _Optional[str] = ..., endpoint_private_endpoint_self_signed: _Optional[str] = ..., endpoint_private_endpoint_default: _Optional[str] = ..., backup_restore_status: _Optional[_Union[Deployment.BackupRestoreStatus, _Mapping]] = ..., total_backup_size_bytes: _Optional[int] = ..., backup_upload_in_progress: bool = ..., is_up_to_date: bool = ..., read_only: bool = ...) -> None: ...
     class BackupRestoreStatus(_message.Message):
-        __slots__ = ["revision", "last_updated_at", "restoring", "status", "failure_reason"]
+        __slots__ = ("revision", "last_updated_at", "restoring", "status", "failure_reason")
         REVISION_FIELD_NUMBER: _ClassVar[int]
         LAST_UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
         RESTORING_FIELD_NUMBER: _ClassVar[int]
@@ -182,7 +200,7 @@ class Deployment(_message.Message):
         failure_reason: str
         def __init__(self, revision: _Optional[int] = ..., last_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., restoring: bool = ..., status: _Optional[str] = ..., failure_reason: _Optional[str] = ...) -> None: ...
     class Expiration(_message.Message):
-        __slots__ = ["expires_at", "reason", "last_warning_email_send_at", "last_warning_email_send_to"]
+        __slots__ = ("expires_at", "reason", "last_warning_email_send_at", "last_warning_email_send_to")
         EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
         REASON_FIELD_NUMBER: _ClassVar[int]
         LAST_WARNING_EMAIL_SEND_AT_FIELD_NUMBER: _ClassVar[int]
@@ -193,7 +211,7 @@ class Deployment(_message.Message):
         last_warning_email_send_to: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., reason: _Optional[str] = ..., last_warning_email_send_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_warning_email_send_to: _Optional[_Iterable[str]] = ...) -> None: ...
     class BackupRestoreSpec(_message.Message):
-        __slots__ = ["revision", "last_updated_at", "restored_by_id", "backup_id"]
+        __slots__ = ("revision", "last_updated_at", "restored_by_id", "backup_id")
         REVISION_FIELD_NUMBER: _ClassVar[int]
         LAST_UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
         RESTORED_BY_ID_FIELD_NUMBER: _ClassVar[int]
@@ -204,15 +222,22 @@ class Deployment(_message.Message):
         backup_id: str
         def __init__(self, revision: _Optional[int] = ..., last_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., restored_by_id: _Optional[str] = ..., backup_id: _Optional[str] = ...) -> None: ...
     class NotificationSettings(_message.Message):
-        __slots__ = ["email_addresses"]
+        __slots__ = ("email_addresses",)
         EMAIL_ADDRESSES_FIELD_NUMBER: _ClassVar[int]
         email_addresses: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, email_addresses: _Optional[_Iterable[str]] = ...) -> None: ...
     class DiskAutoSizeSettings(_message.Message):
-        __slots__ = ["maximum_node_disk_size"]
+        __slots__ = ("maximum_node_disk_size",)
         MAXIMUM_NODE_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
         maximum_node_disk_size: int
         def __init__(self, maximum_node_disk_size: _Optional[int] = ...) -> None: ...
+    class NotificationsEntry(_message.Message):
+        __slots__ = ("key", "value")
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: Notification
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[Notification, _Mapping]] = ...) -> None: ...
     ID_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
@@ -265,6 +290,8 @@ class Deployment(_message.Message):
     DEPLOYMENT_PROFILE_ID_FIELD_NUMBER: _ClassVar[int]
     IS_PLATFORM_AUTHENTICATION_ENABLED_FIELD_NUMBER: _ClassVar[int]
     INTENDED_USE_CASE_FIELD_NUMBER: _ClassVar[int]
+    DROP_VST_SUPPORT_FIELD_NUMBER: _ClassVar[int]
+    NOTIFICATIONS_FIELD_NUMBER: _ClassVar[int]
     id: str
     url: str
     name: str
@@ -317,10 +344,12 @@ class Deployment(_message.Message):
     deployment_profile_id: str
     is_platform_authentication_enabled: bool
     intended_use_case: str
-    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., support_plan_id: _Optional[str] = ..., created_by_id: _Optional[str] = ..., accepted_terms_and_conditions_id: _Optional[str] = ..., locked: bool = ..., is_paused: bool = ..., last_paused_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_resumed_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_id: _Optional[str] = ..., disable_foxx_authentication: bool = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_prepaid_deployment_update_available: bool = ..., private_endpoint: bool = ..., version: _Optional[str] = ..., replace_version_by: _Optional[_Union[ReplaceVersionBy, _Mapping]] = ..., upgrade_recommendation: _Optional[_Union[UpgradeVersionRecommendation, _Mapping]] = ..., version_is_end_of_life: bool = ..., certificates: _Optional[_Union[Deployment.CertificateSpec, _Mapping]] = ..., servers: _Optional[_Union[Deployment.ServersSpec, _Mapping]] = ..., ipallowlist_id: _Optional[str] = ..., model: _Optional[_Union[Deployment.ModelSpec, _Mapping]] = ..., custom_image: _Optional[str] = ..., iamprovider_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., disk_performance_locked: bool = ..., disk_rate_limit_period: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., last_disk_performance_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_disk_size_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., disk_rate_limit_active: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., status: _Optional[_Union[Deployment.Status, _Mapping]] = ..., size: _Optional[_Union[DeploymentSize, _Mapping]] = ..., expiration: _Optional[_Union[Deployment.Expiration, _Mapping]] = ..., backup_restore: _Optional[_Union[Deployment.BackupRestoreSpec, _Mapping]] = ..., deployment_recommendations: _Optional[_Iterable[_Union[DeploymentSizeRecommendation, _Mapping]]] = ..., is_clone: bool = ..., clone_backup_id: _Optional[str] = ..., notification_settings: _Optional[_Union[Deployment.NotificationSettings, _Mapping]] = ..., disk_auto_size_settings: _Optional[_Union[Deployment.DiskAutoSizeSettings, _Mapping]] = ..., is_scheduled_root_password_rotation_enabled: bool = ..., last_root_password_rotated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deployment_profile_id: _Optional[str] = ..., is_platform_authentication_enabled: bool = ..., intended_use_case: _Optional[str] = ...) -> None: ...
+    drop_vst_support: bool
+    notifications: _containers.MessageMap[str, Notification]
+    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., support_plan_id: _Optional[str] = ..., created_by_id: _Optional[str] = ..., accepted_terms_and_conditions_id: _Optional[str] = ..., locked: bool = ..., is_paused: bool = ..., last_paused_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_resumed_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_id: _Optional[str] = ..., disable_foxx_authentication: bool = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_prepaid_deployment_update_available: bool = ..., private_endpoint: bool = ..., version: _Optional[str] = ..., replace_version_by: _Optional[_Union[ReplaceVersionBy, _Mapping]] = ..., upgrade_recommendation: _Optional[_Union[UpgradeVersionRecommendation, _Mapping]] = ..., version_is_end_of_life: bool = ..., certificates: _Optional[_Union[Deployment.CertificateSpec, _Mapping]] = ..., servers: _Optional[_Union[Deployment.ServersSpec, _Mapping]] = ..., ipallowlist_id: _Optional[str] = ..., model: _Optional[_Union[Deployment.ModelSpec, _Mapping]] = ..., custom_image: _Optional[str] = ..., iamprovider_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., disk_performance_locked: bool = ..., disk_rate_limit_period: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., last_disk_performance_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_disk_size_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., disk_rate_limit_active: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., status: _Optional[_Union[Deployment.Status, _Mapping]] = ..., size: _Optional[_Union[DeploymentSize, _Mapping]] = ..., expiration: _Optional[_Union[Deployment.Expiration, _Mapping]] = ..., backup_restore: _Optional[_Union[Deployment.BackupRestoreSpec, _Mapping]] = ..., deployment_recommendations: _Optional[_Iterable[_Union[DeploymentSizeRecommendation, _Mapping]]] = ..., is_clone: bool = ..., clone_backup_id: _Optional[str] = ..., notification_settings: _Optional[_Union[Deployment.NotificationSettings, _Mapping]] = ..., disk_auto_size_settings: _Optional[_Union[Deployment.DiskAutoSizeSettings, _Mapping]] = ..., is_scheduled_root_password_rotation_enabled: bool = ..., last_root_password_rotated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deployment_profile_id: _Optional[str] = ..., is_platform_authentication_enabled: bool = ..., intended_use_case: _Optional[str] = ..., drop_vst_support: bool = ..., notifications: _Optional[_Mapping[str, Notification]] = ...) -> None: ...
 
 class NodeSize(_message.Message):
-    __slots__ = ["id", "name", "memory_size", "min_disk_size", "max_disk_size", "cpu_size", "disk_sizes"]
+    __slots__ = ("id", "name", "memory_size", "min_disk_size", "max_disk_size", "cpu_size", "disk_sizes")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -338,13 +367,13 @@ class NodeSize(_message.Message):
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., memory_size: _Optional[int] = ..., min_disk_size: _Optional[int] = ..., max_disk_size: _Optional[int] = ..., cpu_size: _Optional[str] = ..., disk_sizes: _Optional[_Iterable[int]] = ...) -> None: ...
 
 class NodeSizeList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[NodeSize]
     def __init__(self, items: _Optional[_Iterable[_Union[NodeSize, _Mapping]]] = ...) -> None: ...
 
 class NodeSizesRequest(_message.Message):
-    __slots__ = ["project_id", "region_id", "deployment_id", "model", "organization_id", "include_restricted"]
+    __slots__ = ("project_id", "region_id", "deployment_id", "model", "organization_id", "include_restricted")
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
@@ -360,27 +389,44 @@ class NodeSizesRequest(_message.Message):
     def __init__(self, project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., deployment_id: _Optional[str] = ..., model: _Optional[str] = ..., organization_id: _Optional[str] = ..., include_restricted: bool = ...) -> None: ...
 
 class DeploymentModel(_message.Message):
-    __slots__ = ["id", "name"]
+    __slots__ = ("id", "name", "features", "deployment_ttl")
+    class Features(_message.Message):
+        __slots__ = ("ml_free_trial", "private_endpoints", "metrics_endpoint", "backup_uploads")
+        ML_FREE_TRIAL_FIELD_NUMBER: _ClassVar[int]
+        PRIVATE_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
+        METRICS_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
+        BACKUP_UPLOADS_FIELD_NUMBER: _ClassVar[int]
+        ml_free_trial: bool
+        private_endpoints: bool
+        metrics_endpoint: bool
+        backup_uploads: bool
+        def __init__(self, ml_free_trial: bool = ..., private_endpoints: bool = ..., metrics_endpoint: bool = ..., backup_uploads: bool = ...) -> None: ...
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    FEATURES_FIELD_NUMBER: _ClassVar[int]
+    DEPLOYMENT_TTL_FIELD_NUMBER: _ClassVar[int]
     id: str
     name: str
-    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
+    features: DeploymentModel.Features
+    deployment_ttl: int
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., features: _Optional[_Union[DeploymentModel.Features, _Mapping]] = ..., deployment_ttl: _Optional[int] = ...) -> None: ...
 
 class DeploymentModelList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[DeploymentModel]
     def __init__(self, items: _Optional[_Iterable[_Union[DeploymentModel, _Mapping]]] = ...) -> None: ...
 
 class ListDeploymentModelsRequest(_message.Message):
-    __slots__ = ["project_id"]
+    __slots__ = ("project_id", "deployment_id")
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
+    DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     project_id: str
-    def __init__(self, project_id: _Optional[str] = ...) -> None: ...
+    deployment_id: str
+    def __init__(self, project_id: _Optional[str] = ..., deployment_id: _Optional[str] = ...) -> None: ...
 
 class CPUSize(_message.Message):
-    __slots__ = ["id", "name"]
+    __slots__ = ("id", "name")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     id: str
@@ -388,13 +434,13 @@ class CPUSize(_message.Message):
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
 
 class CPUSizeList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[CPUSize]
     def __init__(self, items: _Optional[_Iterable[_Union[CPUSize, _Mapping]]] = ...) -> None: ...
 
 class ListCPUSizesRequest(_message.Message):
-    __slots__ = ["project_id", "deployment_id"]
+    __slots__ = ("project_id", "deployment_id")
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     project_id: str
@@ -402,7 +448,7 @@ class ListCPUSizesRequest(_message.Message):
     def __init__(self, project_id: _Optional[str] = ..., deployment_id: _Optional[str] = ...) -> None: ...
 
 class DeploymentCredentialsRequest(_message.Message):
-    __slots__ = ["deployment_id", "reason"]
+    __slots__ = ("deployment_id", "reason")
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
     deployment_id: str
@@ -410,7 +456,7 @@ class DeploymentCredentialsRequest(_message.Message):
     def __init__(self, deployment_id: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
 
 class DeploymentCredentials(_message.Message):
-    __slots__ = ["username", "password"]
+    __slots__ = ("username", "password")
     USERNAME_FIELD_NUMBER: _ClassVar[int]
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
     username: str
@@ -418,7 +464,7 @@ class DeploymentCredentials(_message.Message):
     def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class DeploymentList(_message.Message):
-    __slots__ = ["items", "budget"]
+    __slots__ = ("items", "budget")
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     BUDGET_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Deployment]
@@ -426,7 +472,7 @@ class DeploymentList(_message.Message):
     def __init__(self, items: _Optional[_Iterable[_Union[Deployment, _Mapping]]] = ..., budget: _Optional[_Union[_common_pb2.Budget, _Mapping]] = ...) -> None: ...
 
 class Version(_message.Message):
-    __slots__ = ["version", "replace_by", "upgrade_recommendation", "is_end_of_life", "release_notes_url"]
+    __slots__ = ("version", "replace_by", "upgrade_recommendation", "is_end_of_life", "release_notes_url")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     REPLACE_BY_FIELD_NUMBER: _ClassVar[int]
     UPGRADE_RECOMMENDATION_FIELD_NUMBER: _ClassVar[int]
@@ -440,7 +486,7 @@ class Version(_message.Message):
     def __init__(self, version: _Optional[str] = ..., replace_by: _Optional[_Union[ReplaceVersionBy, _Mapping]] = ..., upgrade_recommendation: _Optional[_Union[UpgradeVersionRecommendation, _Mapping]] = ..., is_end_of_life: bool = ..., release_notes_url: _Optional[str] = ...) -> None: ...
 
 class ReplaceVersionBy(_message.Message):
-    __slots__ = ["version", "reason", "auto_update_date"]
+    __slots__ = ("version", "reason", "auto_update_date")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
     AUTO_UPDATE_DATE_FIELD_NUMBER: _ClassVar[int]
@@ -450,7 +496,7 @@ class ReplaceVersionBy(_message.Message):
     def __init__(self, version: _Optional[str] = ..., reason: _Optional[str] = ..., auto_update_date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class UpgradeVersionRecommendation(_message.Message):
-    __slots__ = ["version", "reason"]
+    __slots__ = ("version", "reason")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
     version: str
@@ -458,13 +504,13 @@ class UpgradeVersionRecommendation(_message.Message):
     def __init__(self, version: _Optional[str] = ..., reason: _Optional[str] = ...) -> None: ...
 
 class VersionList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Version]
     def __init__(self, items: _Optional[_Iterable[_Union[Version, _Mapping]]] = ...) -> None: ...
 
 class ListVersionsRequest(_message.Message):
-    __slots__ = ["options", "organization_id", "current_version"]
+    __slots__ = ("options", "organization_id", "current_version")
     OPTIONS_FIELD_NUMBER: _ClassVar[int]
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     CURRENT_VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -474,7 +520,7 @@ class ListVersionsRequest(_message.Message):
     def __init__(self, options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., organization_id: _Optional[str] = ..., current_version: _Optional[str] = ...) -> None: ...
 
 class ServersSpecLimitsRequest(_message.Message):
-    __slots__ = ["project_id", "region_id", "deployment_id"]
+    __slots__ = ("project_id", "region_id", "deployment_id")
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
@@ -484,9 +530,9 @@ class ServersSpecLimitsRequest(_message.Message):
     def __init__(self, project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., deployment_id: _Optional[str] = ...) -> None: ...
 
 class ServersSpecLimits(_message.Message):
-    __slots__ = ["coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "node_memory_size", "node_count"]
+    __slots__ = ("coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "node_memory_size", "node_count")
     class Limits(_message.Message):
-        __slots__ = ["min", "max", "allowed_values"]
+        __slots__ = ("min", "max", "allowed_values")
         MIN_FIELD_NUMBER: _ClassVar[int]
         MAX_FIELD_NUMBER: _ClassVar[int]
         ALLOWED_VALUES_FIELD_NUMBER: _ClassVar[int]
@@ -511,7 +557,7 @@ class ServersSpecLimits(_message.Message):
     def __init__(self, coordinators: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., coordinator_memory_size: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., dbservers: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., dbserver_memory_size: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., dbserver_disk_size: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., node_memory_size: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ..., node_count: _Optional[_Union[ServersSpecLimits.Limits, _Mapping]] = ...) -> None: ...
 
 class CalculateDeploymentSizeRequest(_message.Message):
-    __slots__ = ["coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "model", "node_size_id", "node_count", "node_disk_size", "region_id"]
+    __slots__ = ("coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "model", "node_size_id", "node_count", "node_disk_size", "region_id")
     COORDINATORS_FIELD_NUMBER: _ClassVar[int]
     COORDINATOR_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     DBSERVERS_FIELD_NUMBER: _ClassVar[int]
@@ -535,7 +581,7 @@ class CalculateDeploymentSizeRequest(_message.Message):
     def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., model: _Optional[str] = ..., node_size_id: _Optional[str] = ..., node_count: _Optional[int] = ..., node_disk_size: _Optional[int] = ..., region_id: _Optional[str] = ...) -> None: ...
 
 class DeploymentSize(_message.Message):
-    __slots__ = ["agents", "agent_memory_size", "agent_disk_size", "total_memory_size", "total_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size"]
+    __slots__ = ("agents", "agent_memory_size", "agent_disk_size", "total_memory_size", "total_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size")
     AGENTS_FIELD_NUMBER: _ClassVar[int]
     AGENT_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     AGENT_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -559,7 +605,7 @@ class DeploymentSize(_message.Message):
     def __init__(self, agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., total_memory_size: _Optional[int] = ..., total_disk_size: _Optional[int] = ..., coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ...) -> None: ...
 
 class DeploymentSizeRequest(_message.Message):
-    __slots__ = ["dataset_size", "usecase", "model", "file_format", "number_of_documents", "number_of_columns", "working_set_percentage", "access_read_percentage", "access_create_percentage", "access_update_percentage", "growth_rate", "replication_factor", "project_id", "region_id"]
+    __slots__ = ("dataset_size", "usecase", "model", "file_format", "number_of_documents", "number_of_columns", "working_set_percentage", "access_read_percentage", "access_create_percentage", "access_update_percentage", "growth_rate", "replication_factor", "project_id", "region_id")
     DATASET_SIZE_FIELD_NUMBER: _ClassVar[int]
     USECASE_FIELD_NUMBER: _ClassVar[int]
     MODEL_FIELD_NUMBER: _ClassVar[int]
@@ -591,7 +637,7 @@ class DeploymentSizeRequest(_message.Message):
     def __init__(self, dataset_size: _Optional[int] = ..., usecase: _Optional[str] = ..., model: _Optional[str] = ..., file_format: _Optional[str] = ..., number_of_documents: _Optional[int] = ..., number_of_columns: _Optional[int] = ..., working_set_percentage: _Optional[float] = ..., access_read_percentage: _Optional[float] = ..., access_create_percentage: _Optional[float] = ..., access_update_percentage: _Optional[float] = ..., growth_rate: _Optional[float] = ..., replication_factor: _Optional[int] = ..., project_id: _Optional[str] = ..., region_id: _Optional[str] = ...) -> None: ...
 
 class DeploymentSizeRecommendation(_message.Message):
-    __slots__ = ["request", "created_at", "node_memory_size", "node_disk_size", "node_count", "exceeds_quota", "exceeds_platform"]
+    __slots__ = ("request", "created_at", "node_memory_size", "node_disk_size", "node_count", "exceeds_quota", "exceeds_platform")
     REQUEST_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     NODE_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -609,7 +655,7 @@ class DeploymentSizeRecommendation(_message.Message):
     def __init__(self, request: _Optional[_Union[DeploymentSizeRequest, _Mapping]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., node_memory_size: _Optional[int] = ..., node_disk_size: _Optional[int] = ..., node_count: _Optional[int] = ..., exceeds_quota: bool = ..., exceeds_platform: bool = ...) -> None: ...
 
 class DataVolumeInfo(_message.Message):
-    __slots__ = ["total_bytes", "used_bytes", "available_bytes", "total_inodes", "used_inodes", "available_inodes", "measured_at"]
+    __slots__ = ("total_bytes", "used_bytes", "available_bytes", "total_inodes", "used_inodes", "available_inodes", "measured_at")
     TOTAL_BYTES_FIELD_NUMBER: _ClassVar[int]
     USED_BYTES_FIELD_NUMBER: _ClassVar[int]
     AVAILABLE_BYTES_FIELD_NUMBER: _ClassVar[int]
@@ -627,9 +673,9 @@ class DataVolumeInfo(_message.Message):
     def __init__(self, total_bytes: _Optional[int] = ..., used_bytes: _Optional[int] = ..., available_bytes: _Optional[int] = ..., total_inodes: _Optional[int] = ..., used_inodes: _Optional[int] = ..., available_inodes: _Optional[int] = ..., measured_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class ConnectDriverInstructions(_message.Message):
-    __slots__ = ["drivers"]
+    __slots__ = ("drivers",)
     class DriverInstructions(_message.Message):
-        __slots__ = ["name", "code", "remarks", "driver_url"]
+        __slots__ = ("name", "code", "remarks", "driver_url")
         NAME_FIELD_NUMBER: _ClassVar[int]
         CODE_FIELD_NUMBER: _ClassVar[int]
         REMARKS_FIELD_NUMBER: _ClassVar[int]
@@ -644,7 +690,7 @@ class ConnectDriverInstructions(_message.Message):
     def __init__(self, drivers: _Optional[_Iterable[_Union[ConnectDriverInstructions.DriverInstructions, _Mapping]]] = ...) -> None: ...
 
 class ImportDataInstructions(_message.Message):
-    __slots__ = ["import_dump", "arango_import_json", "arango_import_csv", "arango_import_tsv"]
+    __slots__ = ("import_dump", "arango_import_json", "arango_import_csv", "arango_import_tsv")
     IMPORT_DUMP_FIELD_NUMBER: _ClassVar[int]
     ARANGO_IMPORT_JSON_FIELD_NUMBER: _ClassVar[int]
     ARANGO_IMPORT_CSV_FIELD_NUMBER: _ClassVar[int]
@@ -656,7 +702,7 @@ class ImportDataInstructions(_message.Message):
     def __init__(self, import_dump: _Optional[_Iterable[str]] = ..., arango_import_json: _Optional[_Iterable[str]] = ..., arango_import_csv: _Optional[_Iterable[str]] = ..., arango_import_tsv: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class DeploymentPriceRequest(_message.Message):
-    __slots__ = ["organization_id", "project_id", "support_plan_id", "cloud_provider_id", "cloud_region_id", "model", "node_size_id", "node_count", "node_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "disk_performance_id"]
+    __slots__ = ("organization_id", "project_id", "support_plan_id", "cloud_provider_id", "cloud_region_id", "model", "node_size_id", "node_count", "node_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "disk_performance_id", "use_credit_pricing")
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     SUPPORT_PLAN_ID_FIELD_NUMBER: _ClassVar[int]
@@ -672,6 +718,7 @@ class DeploymentPriceRequest(_message.Message):
     DBSERVER_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     DBSERVER_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
     DISK_PERFORMANCE_ID_FIELD_NUMBER: _ClassVar[int]
+    USE_CREDIT_PRICING_FIELD_NUMBER: _ClassVar[int]
     organization_id: str
     project_id: str
     support_plan_id: str
@@ -687,12 +734,13 @@ class DeploymentPriceRequest(_message.Message):
     dbserver_memory_size: int
     dbserver_disk_size: int
     disk_performance_id: str
-    def __init__(self, organization_id: _Optional[str] = ..., project_id: _Optional[str] = ..., support_plan_id: _Optional[str] = ..., cloud_provider_id: _Optional[str] = ..., cloud_region_id: _Optional[str] = ..., model: _Optional[str] = ..., node_size_id: _Optional[str] = ..., node_count: _Optional[int] = ..., node_disk_size: _Optional[int] = ..., coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., disk_performance_id: _Optional[str] = ...) -> None: ...
+    use_credit_pricing: bool
+    def __init__(self, organization_id: _Optional[str] = ..., project_id: _Optional[str] = ..., support_plan_id: _Optional[str] = ..., cloud_provider_id: _Optional[str] = ..., cloud_region_id: _Optional[str] = ..., model: _Optional[str] = ..., node_size_id: _Optional[str] = ..., node_count: _Optional[int] = ..., node_disk_size: _Optional[int] = ..., coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., disk_performance_id: _Optional[str] = ..., use_credit_pricing: bool = ...) -> None: ...
 
 class DeploymentPrice(_message.Message):
-    __slots__ = ["price_per_hour", "network_transfer_prices", "backup_price", "currency_id", "auditlog_price"]
+    __slots__ = ("price_per_hour", "network_transfer_prices", "backup_price", "currency_id", "auditlog_price")
     class NetworkTransferPrice(_message.Message):
-        __slots__ = ["ingress_price_per_gb", "egress_price_per_gb", "description"]
+        __slots__ = ("ingress_price_per_gb", "egress_price_per_gb", "description")
         INGRESS_PRICE_PER_GB_FIELD_NUMBER: _ClassVar[int]
         EGRESS_PRICE_PER_GB_FIELD_NUMBER: _ClassVar[int]
         DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
@@ -701,12 +749,12 @@ class DeploymentPrice(_message.Message):
         description: str
         def __init__(self, ingress_price_per_gb: _Optional[float] = ..., egress_price_per_gb: _Optional[float] = ..., description: _Optional[str] = ...) -> None: ...
     class BackupPrice(_message.Message):
-        __slots__ = ["price_per_gb_per_hour"]
+        __slots__ = ("price_per_gb_per_hour",)
         PRICE_PER_GB_PER_HOUR_FIELD_NUMBER: _ClassVar[int]
         price_per_gb_per_hour: float
         def __init__(self, price_per_gb_per_hour: _Optional[float] = ...) -> None: ...
     class AuditLogPrice(_message.Message):
-        __slots__ = ["price_per_gb_per_hour", "https_post_invocation_price_per_1000", "https_post_body_size_price_per_gb"]
+        __slots__ = ("price_per_gb_per_hour", "https_post_invocation_price_per_1000", "https_post_body_size_price_per_gb")
         PRICE_PER_GB_PER_HOUR_FIELD_NUMBER: _ClassVar[int]
         HTTPS_POST_INVOCATION_PRICE_PER_1000_FIELD_NUMBER: _ClassVar[int]
         HTTPS_POST_BODY_SIZE_PRICE_PER_GB_FIELD_NUMBER: _ClassVar[int]
@@ -727,17 +775,19 @@ class DeploymentPrice(_message.Message):
     def __init__(self, price_per_hour: _Optional[float] = ..., network_transfer_prices: _Optional[_Iterable[_Union[DeploymentPrice.NetworkTransferPrice, _Mapping]]] = ..., backup_price: _Optional[_Union[DeploymentPrice.BackupPrice, _Mapping]] = ..., currency_id: _Optional[str] = ..., auditlog_price: _Optional[_Union[DeploymentPrice.AuditLogPrice, _Mapping]] = ...) -> None: ...
 
 class DeploymentFeatures(_message.Message):
-    __slots__ = ["iamprovider", "pause", "ml"]
+    __slots__ = ("iamprovider", "pause", "ml", "monitoring")
     IAMPROVIDER_FIELD_NUMBER: _ClassVar[int]
     PAUSE_FIELD_NUMBER: _ClassVar[int]
     ML_FIELD_NUMBER: _ClassVar[int]
+    MONITORING_FIELD_NUMBER: _ClassVar[int]
     iamprovider: bool
     pause: bool
     ml: bool
-    def __init__(self, iamprovider: bool = ..., pause: bool = ..., ml: bool = ...) -> None: ...
+    monitoring: bool
+    def __init__(self, iamprovider: bool = ..., pause: bool = ..., ml: bool = ..., monitoring: bool = ...) -> None: ...
 
 class DeploymentFeaturesRequest(_message.Message):
-    __slots__ = ["project_id", "region_id", "model", "node_size_id"]
+    __slots__ = ("project_id", "region_id", "model", "node_size_id")
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
     MODEL_FIELD_NUMBER: _ClassVar[int]
@@ -749,7 +799,7 @@ class DeploymentFeaturesRequest(_message.Message):
     def __init__(self, project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., model: _Optional[str] = ..., node_size_id: _Optional[str] = ...) -> None: ...
 
 class UpdateDeploymentScheduledRootPasswordRotationRequest(_message.Message):
-    __slots__ = ["deployment_id", "enabled"]
+    __slots__ = ("deployment_id", "enabled")
     DEPLOYMENT_ID_FIELD_NUMBER: _ClassVar[int]
     ENABLED_FIELD_NUMBER: _ClassVar[int]
     deployment_id: str
@@ -757,7 +807,7 @@ class UpdateDeploymentScheduledRootPasswordRotationRequest(_message.Message):
     def __init__(self, deployment_id: _Optional[str] = ..., enabled: bool = ...) -> None: ...
 
 class ListDiskPerformancesRequest(_message.Message):
-    __slots__ = ["region_id", "node_size_id", "dbserver_disk_size", "organization_id", "deployment_id"]
+    __slots__ = ("region_id", "node_size_id", "dbserver_disk_size", "organization_id", "deployment_id")
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
     NODE_SIZE_ID_FIELD_NUMBER: _ClassVar[int]
     DBSERVER_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -771,7 +821,7 @@ class ListDiskPerformancesRequest(_message.Message):
     def __init__(self, region_id: _Optional[str] = ..., node_size_id: _Optional[str] = ..., dbserver_disk_size: _Optional[int] = ..., organization_id: _Optional[str] = ..., deployment_id: _Optional[str] = ...) -> None: ...
 
 class GetDiskPerformanceRequest(_message.Message):
-    __slots__ = ["disk_performance_id", "region_id"]
+    __slots__ = ("disk_performance_id", "region_id")
     DISK_PERFORMANCE_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
     disk_performance_id: str
@@ -779,13 +829,13 @@ class GetDiskPerformanceRequest(_message.Message):
     def __init__(self, disk_performance_id: _Optional[str] = ..., region_id: _Optional[str] = ...) -> None: ...
 
 class DiskPerformanceList(_message.Message):
-    __slots__ = ["items"]
+    __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[DiskPerformance]
     def __init__(self, items: _Optional[_Iterable[_Union[DiskPerformance, _Mapping]]] = ...) -> None: ...
 
 class DiskPerformance(_message.Message):
-    __slots__ = ["id", "name", "description", "is_default"]
+    __slots__ = ("id", "name", "description", "is_default")
     ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
@@ -796,8 +846,22 @@ class DiskPerformance(_message.Message):
     is_default: bool
     def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., is_default: bool = ...) -> None: ...
 
+class Notification(_message.Message):
+    __slots__ = ("notification", "severity", "created_at", "updated_at", "expires_at")
+    NOTIFICATION_FIELD_NUMBER: _ClassVar[int]
+    SEVERITY_FIELD_NUMBER: _ClassVar[int]
+    CREATED_AT_FIELD_NUMBER: _ClassVar[int]
+    UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
+    EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
+    notification: str
+    severity: NotificationSeverity
+    created_at: _timestamp_pb2.Timestamp
+    updated_at: _timestamp_pb2.Timestamp
+    expires_at: _timestamp_pb2.Timestamp
+    def __init__(self, notification: _Optional[str] = ..., severity: _Optional[_Union[NotificationSeverity, str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+
 class ListDeploymentsByFilterRequest(_message.Message):
-    __slots__ = ["organization_id", "project_id", "region_id", "expires_after", "expires_before", "does_not_expire", "options"]
+    __slots__ = ("organization_id", "project_id", "region_id", "expires_after", "expires_before", "does_not_expire", "options")
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     PROJECT_ID_FIELD_NUMBER: _ClassVar[int]
     REGION_ID_FIELD_NUMBER: _ClassVar[int]
