@@ -282,8 +282,8 @@ github.com/andybalholm/brotli v1.0.5/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHG
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/apache/arrow/go/v15 v15.0.2/go.mod h1:DGXsR3ajT524njufqf95822i+KTh+yea1jass9YXgjA=
 github.com/apache/thrift v0.17.0/go.mod h1:OLxhMRJxomX+1I/KUw03qoV3mMz16BwaKI+d4fPBx7Q=
-github.com/arangodb-managed/apis v0.89.1 h1:qFzMhkV7Di5VfR2tZmWKMYAViCKho52Y5XCXH/iML9o=
-github.com/arangodb-managed/apis v0.89.1/go.mod h1:NqGYEs2tPU9ZEC+2N1kYR8mvkeA3oQ2FAxgvX6rJLIw=
+github.com/arangodb-managed/apis v0.89.7-0.20250902113737-36caddb6f69d h1:PKHxgjmCAJvwcEIMflHOjKA2/7/Rl7FNuuS3CkGTFbk=
+github.com/arangodb-managed/apis v0.89.7-0.20250902113737-36caddb6f69d/go.mod h1:NqGYEs2tPU9ZEC+2N1kYR8mvkeA3oQ2FAxgvX6rJLIw=
 github.com/bazelbuild/rules_go v0.49.0/go.mod h1:Dhcz716Kqg1RHNWos+N6MlXNkjNP2EwZQ0LukRKJfMs=
 github.com/boombuler/barcode v1.0.0/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/boombuler/barcode v1.0.1/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=

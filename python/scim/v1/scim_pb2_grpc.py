@@ -6,7 +6,7 @@ import warnings
 from common.v1 import common_pb2 as common_dot_v1_dot_common__pb2
 from scim.v1 import scim_pb2 as scim_dot_v1_dot_scim__pb2
 
-GRPC_GENERATED_VERSION = '1.68.1'
+GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 

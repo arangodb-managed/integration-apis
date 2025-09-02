@@ -54,7 +54,7 @@ class RebalanceDeploymentShardsRequest(_message.Message):
     def __init__(self, deployment_id: _Optional[str] = ...) -> None: ...
 
 class Deployment(_message.Message):
-    __slots__ = ("id", "url", "name", "description", "project_id", "region_id", "created_at", "deleted_at", "is_deleted", "support_plan_id", "created_by_id", "accepted_terms_and_conditions_id", "locked", "is_paused", "last_paused_at", "last_resumed_at", "prepaid_deployment_id", "disable_foxx_authentication", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at", "is_prepaid_deployment_update_available", "private_endpoint", "version", "replace_version_by", "upgrade_recommendation", "version_is_end_of_life", "certificates", "servers", "ipallowlist_id", "model", "custom_image", "iamprovider_id", "disk_performance_id", "disk_performance_locked", "disk_rate_limit_period", "last_disk_performance_updated_at", "last_disk_size_updated_at", "disk_rate_limit_active", "status", "size", "expiration", "backup_restore", "deployment_recommendations", "is_clone", "clone_backup_id", "notification_settings", "disk_auto_size_settings", "is_scheduled_root_password_rotation_enabled", "last_root_password_rotated_at", "deployment_profile_id", "is_platform_authentication_enabled", "intended_use_case", "drop_vst_support", "notifications")
+    __slots__ = ("id", "url", "name", "description", "project_id", "region_id", "created_at", "deleted_at", "is_deleted", "support_plan_id", "created_by_id", "accepted_terms_and_conditions_id", "locked", "is_paused", "last_paused_at", "last_resumed_at", "prepaid_deployment_id", "disable_foxx_authentication", "prepaid_deployment_starts_at", "prepaid_deployment_ends_at", "is_prepaid_deployment_update_available", "private_endpoint", "version", "replace_version_by", "upgrade_recommendation", "version_is_end_of_life", "certificates", "servers", "ipallowlist_id", "model", "custom_image", "iamprovider_id", "disk_performance_id", "disk_performance_locked", "disk_rate_limit_period", "last_disk_performance_updated_at", "last_disk_size_updated_at", "disk_rate_limit_active", "status", "size", "expiration", "backup_restore", "deployment_recommendations", "is_clone", "clone_backup_id", "notification_settings", "is_scheduled_root_password_rotation_enabled", "last_root_password_rotated_at", "deployment_profile_id", "is_platform_authentication_enabled", "intended_use_case", "drop_vst_support", "notifications", "arangodb_platform_enabled")
     class CertificateSpec(_message.Message):
         __slots__ = ("ca_certificate_id", "alternate_dns_names")
         CA_CERTIFICATE_ID_FIELD_NUMBER: _ClassVar[int]
@@ -226,11 +226,6 @@ class Deployment(_message.Message):
         EMAIL_ADDRESSES_FIELD_NUMBER: _ClassVar[int]
         email_addresses: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, email_addresses: _Optional[_Iterable[str]] = ...) -> None: ...
-    class DiskAutoSizeSettings(_message.Message):
-        __slots__ = ("maximum_node_disk_size",)
-        MAXIMUM_NODE_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
-        maximum_node_disk_size: int
-        def __init__(self, maximum_node_disk_size: _Optional[int] = ...) -> None: ...
     class NotificationsEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -284,7 +279,6 @@ class Deployment(_message.Message):
     IS_CLONE_FIELD_NUMBER: _ClassVar[int]
     CLONE_BACKUP_ID_FIELD_NUMBER: _ClassVar[int]
     NOTIFICATION_SETTINGS_FIELD_NUMBER: _ClassVar[int]
-    DISK_AUTO_SIZE_SETTINGS_FIELD_NUMBER: _ClassVar[int]
     IS_SCHEDULED_ROOT_PASSWORD_ROTATION_ENABLED_FIELD_NUMBER: _ClassVar[int]
     LAST_ROOT_PASSWORD_ROTATED_AT_FIELD_NUMBER: _ClassVar[int]
     DEPLOYMENT_PROFILE_ID_FIELD_NUMBER: _ClassVar[int]
@@ -292,6 +286,7 @@ class Deployment(_message.Message):
     INTENDED_USE_CASE_FIELD_NUMBER: _ClassVar[int]
     DROP_VST_SUPPORT_FIELD_NUMBER: _ClassVar[int]
     NOTIFICATIONS_FIELD_NUMBER: _ClassVar[int]
+    ARANGODB_PLATFORM_ENABLED_FIELD_NUMBER: _ClassVar[int]
     id: str
     url: str
     name: str
@@ -338,7 +333,6 @@ class Deployment(_message.Message):
     is_clone: bool
     clone_backup_id: str
     notification_settings: Deployment.NotificationSettings
-    disk_auto_size_settings: Deployment.DiskAutoSizeSettings
     is_scheduled_root_password_rotation_enabled: bool
     last_root_password_rotated_at: _timestamp_pb2.Timestamp
     deployment_profile_id: str
@@ -346,7 +340,8 @@ class Deployment(_message.Message):
     intended_use_case: str
     drop_vst_support: bool
     notifications: _containers.MessageMap[str, Notification]
-    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., support_plan_id: _Optional[str] = ..., created_by_id: _Optional[str] = ..., accepted_terms_and_conditions_id: _Optional[str] = ..., locked: bool = ..., is_paused: bool = ..., last_paused_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_resumed_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_id: _Optional[str] = ..., disable_foxx_authentication: bool = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_prepaid_deployment_update_available: bool = ..., private_endpoint: bool = ..., version: _Optional[str] = ..., replace_version_by: _Optional[_Union[ReplaceVersionBy, _Mapping]] = ..., upgrade_recommendation: _Optional[_Union[UpgradeVersionRecommendation, _Mapping]] = ..., version_is_end_of_life: bool = ..., certificates: _Optional[_Union[Deployment.CertificateSpec, _Mapping]] = ..., servers: _Optional[_Union[Deployment.ServersSpec, _Mapping]] = ..., ipallowlist_id: _Optional[str] = ..., model: _Optional[_Union[Deployment.ModelSpec, _Mapping]] = ..., custom_image: _Optional[str] = ..., iamprovider_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., disk_performance_locked: bool = ..., disk_rate_limit_period: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., last_disk_performance_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_disk_size_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., disk_rate_limit_active: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., status: _Optional[_Union[Deployment.Status, _Mapping]] = ..., size: _Optional[_Union[DeploymentSize, _Mapping]] = ..., expiration: _Optional[_Union[Deployment.Expiration, _Mapping]] = ..., backup_restore: _Optional[_Union[Deployment.BackupRestoreSpec, _Mapping]] = ..., deployment_recommendations: _Optional[_Iterable[_Union[DeploymentSizeRecommendation, _Mapping]]] = ..., is_clone: bool = ..., clone_backup_id: _Optional[str] = ..., notification_settings: _Optional[_Union[Deployment.NotificationSettings, _Mapping]] = ..., disk_auto_size_settings: _Optional[_Union[Deployment.DiskAutoSizeSettings, _Mapping]] = ..., is_scheduled_root_password_rotation_enabled: bool = ..., last_root_password_rotated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deployment_profile_id: _Optional[str] = ..., is_platform_authentication_enabled: bool = ..., intended_use_case: _Optional[str] = ..., drop_vst_support: bool = ..., notifications: _Optional[_Mapping[str, Notification]] = ...) -> None: ...
+    arangodb_platform_enabled: bool
+    def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., project_id: _Optional[str] = ..., region_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., support_plan_id: _Optional[str] = ..., created_by_id: _Optional[str] = ..., accepted_terms_and_conditions_id: _Optional[str] = ..., locked: bool = ..., is_paused: bool = ..., last_paused_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_resumed_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_id: _Optional[str] = ..., disable_foxx_authentication: bool = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_prepaid_deployment_update_available: bool = ..., private_endpoint: bool = ..., version: _Optional[str] = ..., replace_version_by: _Optional[_Union[ReplaceVersionBy, _Mapping]] = ..., upgrade_recommendation: _Optional[_Union[UpgradeVersionRecommendation, _Mapping]] = ..., version_is_end_of_life: bool = ..., certificates: _Optional[_Union[Deployment.CertificateSpec, _Mapping]] = ..., servers: _Optional[_Union[Deployment.ServersSpec, _Mapping]] = ..., ipallowlist_id: _Optional[str] = ..., model: _Optional[_Union[Deployment.ModelSpec, _Mapping]] = ..., custom_image: _Optional[str] = ..., iamprovider_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., disk_performance_locked: bool = ..., disk_rate_limit_period: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., last_disk_performance_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_disk_size_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., disk_rate_limit_active: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., status: _Optional[_Union[Deployment.Status, _Mapping]] = ..., size: _Optional[_Union[DeploymentSize, _Mapping]] = ..., expiration: _Optional[_Union[Deployment.Expiration, _Mapping]] = ..., backup_restore: _Optional[_Union[Deployment.BackupRestoreSpec, _Mapping]] = ..., deployment_recommendations: _Optional[_Iterable[_Union[DeploymentSizeRecommendation, _Mapping]]] = ..., is_clone: bool = ..., clone_backup_id: _Optional[str] = ..., notification_settings: _Optional[_Union[Deployment.NotificationSettings, _Mapping]] = ..., is_scheduled_root_password_rotation_enabled: bool = ..., last_root_password_rotated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deployment_profile_id: _Optional[str] = ..., is_platform_authentication_enabled: bool = ..., intended_use_case: _Optional[str] = ..., drop_vst_support: bool = ..., notifications: _Optional[_Mapping[str, Notification]] = ..., arangodb_platform_enabled: bool = ...) -> None: ...
 
 class NodeSize(_message.Message):
     __slots__ = ("id", "name", "memory_size", "min_disk_size", "max_disk_size", "cpu_size", "disk_sizes")
@@ -581,7 +576,7 @@ class CalculateDeploymentSizeRequest(_message.Message):
     def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., model: _Optional[str] = ..., node_size_id: _Optional[str] = ..., node_count: _Optional[int] = ..., node_disk_size: _Optional[int] = ..., region_id: _Optional[str] = ...) -> None: ...
 
 class DeploymentSize(_message.Message):
-    __slots__ = ("agents", "agent_memory_size", "agent_disk_size", "total_memory_size", "total_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size")
+    __slots__ = ("agents", "agent_memory_size", "agent_disk_size", "total_memory_size", "total_disk_size", "coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "gateways", "gateway_memory_size")
     AGENTS_FIELD_NUMBER: _ClassVar[int]
     AGENT_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     AGENT_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -592,6 +587,8 @@ class DeploymentSize(_message.Message):
     DBSERVERS_FIELD_NUMBER: _ClassVar[int]
     DBSERVER_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     DBSERVER_DISK_SIZE_FIELD_NUMBER: _ClassVar[int]
+    GATEWAYS_FIELD_NUMBER: _ClassVar[int]
+    GATEWAY_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
     agents: int
     agent_memory_size: int
     agent_disk_size: int
@@ -602,7 +599,9 @@ class DeploymentSize(_message.Message):
     dbservers: int
     dbserver_memory_size: int
     dbserver_disk_size: int
-    def __init__(self, agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., total_memory_size: _Optional[int] = ..., total_disk_size: _Optional[int] = ..., coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ...) -> None: ...
+    gateways: int
+    gateway_memory_size: float
+    def __init__(self, agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., total_memory_size: _Optional[int] = ..., total_disk_size: _Optional[int] = ..., coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., gateways: _Optional[int] = ..., gateway_memory_size: _Optional[float] = ...) -> None: ...
 
 class DeploymentSizeRequest(_message.Message):
     __slots__ = ("dataset_size", "usecase", "model", "file_format", "number_of_documents", "number_of_columns", "working_set_percentage", "access_read_percentage", "access_create_percentage", "access_update_percentage", "growth_rate", "replication_factor", "project_id", "region_id")

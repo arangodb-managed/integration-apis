@@ -52,7 +52,7 @@ class UsageItem(_message.Message):
         credit_bundle_ids: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, id: _Optional[str] = ..., url: _Optional[str] = ..., kind: _Optional[str] = ..., description: _Optional[str] = ..., organization_id: _Optional[str] = ..., organization_name: _Optional[str] = ..., project_id: _Optional[str] = ..., project_name: _Optional[str] = ..., deployment_id: _Optional[str] = ..., deployment_name: _Optional[str] = ..., deployment_member_name: _Optional[str] = ..., cloud_provider_id: _Optional[str] = ..., cloud_region_id: _Optional[str] = ..., support_plan_id: _Optional[str] = ..., deployment_model: _Optional[str] = ..., prepaid_deployment_id: _Optional[str] = ..., prepaid_deployment_starts_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., prepaid_deployment_ends_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., credit_bundle_ids: _Optional[_Iterable[str]] = ...) -> None: ...
     class DeploymentSize(_message.Message):
-        __slots__ = ("coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "agents", "agent_memory_size", "agent_disk_size", "node_size_id", "disk_performance_id", "addon_ids", "is_paused")
+        __slots__ = ("coordinators", "coordinator_memory_size", "dbservers", "dbserver_memory_size", "dbserver_disk_size", "agents", "agent_memory_size", "agent_disk_size", "node_size_id", "disk_performance_id", "addon_ids", "is_paused", "gateways", "gateway_memory_size")
         COORDINATORS_FIELD_NUMBER: _ClassVar[int]
         COORDINATOR_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         DBSERVERS_FIELD_NUMBER: _ClassVar[int]
@@ -65,6 +65,8 @@ class UsageItem(_message.Message):
         DISK_PERFORMANCE_ID_FIELD_NUMBER: _ClassVar[int]
         ADDON_IDS_FIELD_NUMBER: _ClassVar[int]
         IS_PAUSED_FIELD_NUMBER: _ClassVar[int]
+        GATEWAYS_FIELD_NUMBER: _ClassVar[int]
+        GATEWAY_MEMORY_SIZE_FIELD_NUMBER: _ClassVar[int]
         coordinators: int
         coordinator_memory_size: int
         dbservers: int
@@ -77,7 +79,9 @@ class UsageItem(_message.Message):
         disk_performance_id: str
         addon_ids: _containers.RepeatedScalarFieldContainer[str]
         is_paused: bool
-        def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., node_size_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., addon_ids: _Optional[_Iterable[str]] = ..., is_paused: bool = ...) -> None: ...
+        gateways: int
+        gateway_memory_size: float
+        def __init__(self, coordinators: _Optional[int] = ..., coordinator_memory_size: _Optional[int] = ..., dbservers: _Optional[int] = ..., dbserver_memory_size: _Optional[int] = ..., dbserver_disk_size: _Optional[int] = ..., agents: _Optional[int] = ..., agent_memory_size: _Optional[int] = ..., agent_disk_size: _Optional[int] = ..., node_size_id: _Optional[str] = ..., disk_performance_id: _Optional[str] = ..., addon_ids: _Optional[_Iterable[str]] = ..., is_paused: bool = ..., gateways: _Optional[int] = ..., gateway_memory_size: _Optional[float] = ...) -> None: ...
     class NetworkTransferSize(_message.Message):
         __slots__ = ("destination", "total_transfer_ingress_size", "total_transfer_egress_size")
         DESTINATION_FIELD_NUMBER: _ClassVar[int]
@@ -215,7 +219,7 @@ class UsageItemList(_message.Message):
     def __init__(self, items: _Optional[_Iterable[_Union[UsageItem, _Mapping]]] = ...) -> None: ...
 
 class ListUsageItemsRequest(_message.Message):
-    __slots__ = ("organization_id", "to", "sort_descending", "kind", "options", "resource_url", "resource_kind", "project_id", "deployment_id", "node_size_id", "region_id", "has_no_invoice_id", "has_invoice_id", "invoice_id", "not_start_before")
+    __slots__ = ("organization_id", "to", "sort_descending", "kind", "options", "resource_url", "resource_kind", "project_id", "deployment_id", "node_size_id", "region_id", "has_no_invoice_id", "has_invoice_id", "invoice_id", "not_start_before", "included_tier_ids", "excluded_tier_ids")
     ORGANIZATION_ID_FIELD_NUMBER: _ClassVar[int]
     FROM_FIELD_NUMBER: _ClassVar[int]
     TO_FIELD_NUMBER: _ClassVar[int]
@@ -232,6 +236,8 @@ class ListUsageItemsRequest(_message.Message):
     HAS_INVOICE_ID_FIELD_NUMBER: _ClassVar[int]
     INVOICE_ID_FIELD_NUMBER: _ClassVar[int]
     NOT_START_BEFORE_FIELD_NUMBER: _ClassVar[int]
+    INCLUDED_TIER_IDS_FIELD_NUMBER: _ClassVar[int]
+    EXCLUDED_TIER_IDS_FIELD_NUMBER: _ClassVar[int]
     organization_id: str
     to: _timestamp_pb2.Timestamp
     sort_descending: bool
@@ -247,4 +253,6 @@ class ListUsageItemsRequest(_message.Message):
     has_invoice_id: bool
     invoice_id: str
     not_start_before: _timestamp_pb2.Timestamp
-    def __init__(self, organization_id: _Optional[str] = ..., to: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., sort_descending: bool = ..., kind: _Optional[str] = ..., options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., resource_url: _Optional[str] = ..., resource_kind: _Optional[str] = ..., project_id: _Optional[str] = ..., deployment_id: _Optional[str] = ..., node_size_id: _Optional[str] = ..., region_id: _Optional[str] = ..., has_no_invoice_id: bool = ..., has_invoice_id: bool = ..., invoice_id: _Optional[str] = ..., not_start_before: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., **kwargs) -> None: ...
+    included_tier_ids: _containers.RepeatedScalarFieldContainer[str]
+    excluded_tier_ids: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, organization_id: _Optional[str] = ..., to: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., sort_descending: bool = ..., kind: _Optional[str] = ..., options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., resource_url: _Optional[str] = ..., resource_kind: _Optional[str] = ..., project_id: _Optional[str] = ..., deployment_id: _Optional[str] = ..., node_size_id: _Optional[str] = ..., region_id: _Optional[str] = ..., has_no_invoice_id: bool = ..., has_invoice_id: bool = ..., invoice_id: _Optional[str] = ..., not_start_before: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., included_tier_ids: _Optional[_Iterable[str]] = ..., excluded_tier_ids: _Optional[_Iterable[str]] = ..., **kwargs) -> None: ...

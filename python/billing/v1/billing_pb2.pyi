@@ -197,14 +197,16 @@ class PreparedPaymentMethod(_message.Message):
     def __init__(self, provider_id: _Optional[str] = ..., organization_id: _Optional[str] = ..., currency_id: _Optional[str] = ..., token: _Optional[str] = ..., script_url: _Optional[str] = ..., signature: _Optional[str] = ...) -> None: ...
 
 class CreatePaymentMethodRequest(_message.Message):
-    __slots__ = ("prepared_payment_method", "first_name", "last_name")
+    __slots__ = ("prepared_payment_method", "first_name", "last_name", "issuing_country")
     PREPARED_PAYMENT_METHOD_FIELD_NUMBER: _ClassVar[int]
     FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
     LAST_NAME_FIELD_NUMBER: _ClassVar[int]
+    ISSUING_COUNTRY_FIELD_NUMBER: _ClassVar[int]
     prepared_payment_method: PreparedPaymentMethod
     first_name: str
     last_name: str
-    def __init__(self, prepared_payment_method: _Optional[_Union[PreparedPaymentMethod, _Mapping]] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ...) -> None: ...
+    issuing_country: str
+    def __init__(self, prepared_payment_method: _Optional[_Union[PreparedPaymentMethod, _Mapping]] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., issuing_country: _Optional[str] = ...) -> None: ...
 
 class ListPaymentProvidersRequest(_message.Message):
     __slots__ = ("organization_id", "options", "include_internal")
@@ -217,7 +219,7 @@ class ListPaymentProvidersRequest(_message.Message):
     def __init__(self, organization_id: _Optional[str] = ..., options: _Optional[_Union[_common_pb2.ListOptions, _Mapping]] = ..., include_internal: bool = ...) -> None: ...
 
 class PaymentMethod(_message.Message):
-    __slots__ = ("id", "name", "description", "payment_provider_id", "organization_id", "created_at", "deleted_at", "is_deleted", "valid_until", "token", "type", "is_default", "currency_id", "credit_card_info")
+    __slots__ = ("id", "name", "description", "payment_provider_id", "organization_id", "created_at", "deleted_at", "is_deleted", "valid_until", "token", "type", "is_default", "currency_id", "issuing_country", "credit_card_info")
     class CreditCardInfo(_message.Message):
         __slots__ = ("last_digits", "card_type")
         LAST_DIGITS_FIELD_NUMBER: _ClassVar[int]
@@ -238,6 +240,7 @@ class PaymentMethod(_message.Message):
     TYPE_FIELD_NUMBER: _ClassVar[int]
     IS_DEFAULT_FIELD_NUMBER: _ClassVar[int]
     CURRENCY_ID_FIELD_NUMBER: _ClassVar[int]
+    ISSUING_COUNTRY_FIELD_NUMBER: _ClassVar[int]
     CREDIT_CARD_INFO_FIELD_NUMBER: _ClassVar[int]
     id: str
     name: str
@@ -252,8 +255,9 @@ class PaymentMethod(_message.Message):
     type: str
     is_default: bool
     currency_id: str
+    issuing_country: str
     credit_card_info: PaymentMethod.CreditCardInfo
-    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., payment_provider_id: _Optional[str] = ..., organization_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., valid_until: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., token: _Optional[str] = ..., type: _Optional[str] = ..., is_default: bool = ..., currency_id: _Optional[str] = ..., credit_card_info: _Optional[_Union[PaymentMethod.CreditCardInfo, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., payment_provider_id: _Optional[str] = ..., organization_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_deleted: bool = ..., valid_until: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., token: _Optional[str] = ..., type: _Optional[str] = ..., is_default: bool = ..., currency_id: _Optional[str] = ..., issuing_country: _Optional[str] = ..., credit_card_info: _Optional[_Union[PaymentMethod.CreditCardInfo, _Mapping]] = ...) -> None: ...
 
 class PaymentMethodList(_message.Message):
     __slots__ = ("items",)

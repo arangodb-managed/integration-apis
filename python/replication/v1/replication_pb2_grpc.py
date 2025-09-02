@@ -7,7 +7,7 @@ from common.v1 import common_pb2 as common_dot_v1_dot_common__pb2
 from data.v1 import data_pb2 as data_dot_v1_dot_data__pb2
 from replication.v1 import replication_pb2 as replication_dot_v1_dot_replication__pb2
 
-GRPC_GENERATED_VERSION = '1.68.1'
+GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 

@@ -149,6 +149,8 @@ test:
 	go tool cover -html=bin/test/coverage.out -o bin/test/coverage.html
 
 APISVERSION := $(shell zutano go mod latest github.com/arangodb-managed/apis | awk -F '@' '{ print $$2 }')
+APISVERSION := OAS-10866-remove-DiskAutoSizeSettings
+
 .PHONY: update-modules
 update-modules:
 	zutano update-check --quiet --fail
